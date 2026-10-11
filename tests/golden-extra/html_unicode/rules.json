@@ -1,0 +1,100 @@
+{
+  "div-class": {
+    "html": {
+      "tag": "div",
+      "attr": "class",
+      "value": "x"
+    }
+  },
+  "tag-kelvin": {
+    "html": "tag:kvg"
+  },
+  "tag-long-s": {
+    "html": "tag:\u017fcript"
+  },
+  "tag-dotted-i": {
+    "html": "tag:\u0130mg"
+  },
+  "tag-dotless-i": {
+    "html": "tag:\u0131mg"
+  },
+  "combining-mn": {
+    "html": {
+      "tag": "abc",
+      "attr": "d"
+    }
+  },
+  "combining-mn-joined": {
+    "html": "tag:abc\u0301d"
+  },
+  "spacing-mc": {
+    "html": {
+      "tag": "pq",
+      "attr": "r"
+    }
+  },
+  "connector-pc": {
+    "html": {
+      "tag": "x",
+      "attr": "y"
+    }
+  },
+  "connector-pc-joined": {
+    "html": "tag:x\u203fy"
+  },
+  "fullwidth-pc": {
+    "html": {
+      "attr": "id",
+      "value": "7"
+    }
+  },
+  "letters": {
+    "html": {
+      "tag": "my-\u00e9l\u00e9ment",
+      "attr": "data-\u00fc",
+      "value": "\u00d6"
+    }
+  },
+  "digits": {
+    "html": [
+      "tag:h\u0663",
+      "tag:x\u216b",
+      "tag:y\u00b2",
+      "tag:z\u00bd"
+    ]
+  },
+  "boundary": {
+    "html": {
+      "tag": "a",
+      "attr": "b",
+      "value": "1"
+    }
+  },
+  "namespaced": {
+    "html": "tag:a:b"
+  },
+  "svg": {
+    "html": {
+      "tag": "svg:rect",
+      "attr": ":bind"
+    }
+  },
+  "underscore": {
+    "html": {
+      "attr": "_ngcontent-c0"
+    }
+  },
+  "unquoted": {
+    "html": {
+      "tag": "td",
+      "attr": "w",
+      "value": "x\ufeffy"
+    }
+  },
+  "astral": {
+    "html": {
+      "attr": "title",
+      "value": "\ud83d\ude00"
+    }
+  }
+}

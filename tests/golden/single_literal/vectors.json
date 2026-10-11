@@ -1,0 +1,213 @@
+[
+  {
+    "call": "match",
+    "head": "Server: nginx",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "nginx",
+      "head": "server:nginx",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "nginx",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "server:NGINX/1.25.3",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "nginx",
+      "head": "server:nginx/1.25.3",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "nginx",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "  SERVER :  nginx  ",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "nginx",
+      "head": "server:nginx",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "nginx",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "X-Server: nginx",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "nginx",
+      "head": "x-server:nginx",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "nginx",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "Server: apache",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "server:apache",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "Server: ngin",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "server:ngin",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "nginx",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "nginx",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "headers",
+    "value": "nginx/1.18.0",
+    "name": "Server",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "nginx",
+      "head": "server:nginx/1.18.0",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "nginx",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "headers",
+    "value": "Apache",
+    "name": "Server",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "server:apache",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "headers": {
+        "Via": "1.1 varnish",
+        "Server": "nginx"
+      }
+    },
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "nginx",
+      "head": "server:nginx",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "headers": {
+        "Server": "IIS"
+      }
+    },
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<html><body>nginx</body></html>",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "ctl": {
+    "headers": {
+      "X-Ctl": "a\u0000b\u0001\u001f\u007fc"
+    }
+  },
+  "quote\"back\\slash": {
+    "headers": {
+      "X-Q\"": "v\\\"/"
+    },
+    "js": "q\"s"
+  },
+  "line-sep": {
+    "headers": {
+      "X-LS": "a\u2028b\u2029c"
+    }
+  },
+  "html-chars": {
+    "headers": {
+      "X-H": "</script><!--&amp;'"
+    }
+  },
+  "emoji": {
+    "headers": {
+      "X-E": "\ud83d\ude00\ud83c\udff3\ufe0f\u200d\ud83c\udf08"
+    },
+    "cdn": "\u2601\ufe0f"
+  },
+  "tabs": {
+    "headers": {
+      "X-T": "a\tb\nc\rd\be\ff"
+    }
+  },
+  "cyrillic-key-\u043a\u043b\u044e\u0447": {
+    "headers": {
+      "\u0417\u0430\u0433": "\u043e\u043a"
+    }
+  },
+  "nul-key\u0000": {
+    "js": "nul"
+  },
+  "bmp-edge": {
+    "headers": {
+      "X-Max": "\uffff\ufffe\ud800\udc00\udbff\udfff"
+    }
+  },
+  "slash": {
+    "url": "a/b"
+  },
+  "c1": {
+    "headers": {
+      "X-C1": "\u0080\u009f\u00ad"
+    }
+  }
+}

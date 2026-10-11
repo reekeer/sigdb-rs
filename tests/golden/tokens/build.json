@@ -1,0 +1,145 @@
+{
+  "rules": {
+    "react@18.2.0/index.js": {
+      "data": {
+        "package": "react",
+        "version": "18.2.0",
+        "path": "index.js",
+        "entry": true,
+        "specifier": "react",
+        "exports": [
+          "useState",
+          "createElement"
+        ]
+      },
+      "features": [
+        "P:useState",
+        "S:react.element",
+        "K:setState",
+        "G:WeakMap"
+      ],
+      "strings": [
+        "react.element",
+        " ERROR ",
+        "Minified React error #"
+      ]
+    },
+    "zustand@4.5.0/index.js": {
+      "data": {
+        "package": "zustand",
+        "version": "4.5.0",
+        "path": "index.js",
+        "entry": true,
+        "specifier": "zustand",
+        "exports": [
+          "create"
+        ]
+      },
+      "features": [
+        "P:useState",
+        "P:usestate",
+        "G:WeakMap",
+        "K:subscribe"
+      ],
+      "strings": [
+        "zustand",
+        "ERROR"
+      ]
+    },
+    "next@14.1.0/dist/client/link.js": {
+      "data": {
+        "package": "next",
+        "version": "14.1.0",
+        "path": "dist/client/link.js",
+        "entry": false,
+        "specifier": "next/link",
+        "exports": [
+          "default"
+        ]
+      },
+      "features": [
+        "P:useState",
+        "S:next.link",
+        "P:prefetch"
+      ],
+      "strings": [
+        "prefetch"
+      ]
+    },
+    "next@14.1.0/dist/client/router.js": {
+      "features": [
+        "P:prefetch",
+        "P:push"
+      ]
+    },
+    "weird@1.0.0/a\u0000b": {
+      "data": null,
+      "features": [
+        "S:\u0000",
+        "S: spaced "
+      ]
+    }
+  },
+  "groups": {
+    "features": {},
+    "strings": {
+      "match": "contains"
+    }
+  },
+  "indexes": {
+    "functions": {
+      "rules": {
+        "react@18.2.0/index.js#useState": {
+          "data": {
+            "file": "react@18.2.0/index.js",
+            "calls": [
+              "react@18.2.0/index.js#resolveDispatcher"
+            ]
+          },
+          "features": [
+            "P:useState",
+            "K:dispatcher",
+            "G:Error"
+          ]
+        },
+        "react@18.2.0/index.js#resolveDispatcher": {
+          "data": {
+            "file": "react@18.2.0/index.js",
+            "calls": []
+          },
+          "features": [
+            "K:dispatcher",
+            "K:current"
+          ]
+        },
+        "zustand@4.5.0/index.js#create": {
+          "data": {
+            "file": "zustand@4.5.0/index.js",
+            "calls": []
+          },
+          "features": [
+            "P:useState",
+            "K:subscribe",
+            "K:getState"
+          ]
+        }
+      },
+      "groups": {
+        "features": {}
+      }
+    }
+  },
+  "sections": {
+    "prints": {
+      "version": 1,
+      "files": 5,
+      "note": "arbitrary json"
+    },
+    "blob": {
+      "hex": "00ff10"
+    }
+  },
+  "metadata": {
+    "dataset": "golden-tokens"
+  }
+}

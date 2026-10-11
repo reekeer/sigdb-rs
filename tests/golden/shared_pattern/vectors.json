@@ -1,0 +1,270 @@
+[
+  {
+    "call": "match",
+    "head": "js:jquery",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "js:jquery",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "js:jQuery 3.7.1",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "js:jquery 3.7.1",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "jquery.min.js",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "jquery-a",
+      "head": "jquery.min.js",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "jquery-a",
+          1,
+          [
+            0
+          ]
+        ],
+        [
+          1,
+          "jquery-b",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "X-Powered-By: Express",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "express-a",
+      "head": "x-powered-by:express",
+      "pattern_id": 1,
+      "all": [
+        [
+          2,
+          "express-a",
+          1,
+          [
+            1
+          ]
+        ],
+        [
+          3,
+          "express-b",
+          1,
+          [
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "headers",
+    "value": "Express",
+    "name": "X-Powered-By",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "express-a",
+      "head": "x-powered-by:express",
+      "pattern_id": 1,
+      "all": [
+        [
+          2,
+          "express-a",
+          1,
+          [
+            1
+          ]
+        ],
+        [
+          3,
+          "express-b",
+          1,
+          [
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "server:apache",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "server:apache",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "server:Apache-Coyote/1.1",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "server:apache-coyote/1.1",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "server:apache-co",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "server:apache-co",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "nginx",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "nginx",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cms",
+    "value": "WordPress 6.4",
+    "expect": {
+      "result": true,
+      "item_id": 6,
+      "key": "multi-a",
+      "head": "wordpress 6.4",
+      "pattern_id": 5,
+      "all": [
+        [
+          6,
+          "multi-a",
+          1,
+          [
+            5
+          ]
+        ],
+        [
+          7,
+          "multi-b",
+          1,
+          [
+            5
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cdn",
+    "value": "fastly",
+    "expect": {
+      "result": true,
+      "item_id": 7,
+      "key": "multi-b",
+      "head": "fastly",
+      "pattern_id": 6,
+      "all": [
+        [
+          7,
+          "multi-b",
+          1,
+          [
+            6
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cdn",
+    "value": "cloudflare",
+    "expect": {
+      "result": true,
+      "item_id": 6,
+      "key": "multi-a",
+      "head": "cloudflare",
+      "pattern_id": 4,
+      "all": [
+        [
+          6,
+          "multi-a",
+          1,
+          [
+            4
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "cdn": [
+        "fastly"
+      ],
+      "cms": "wordpress"
+    },
+    "expect": {
+      "result": true,
+      "item_id": 7,
+      "key": "multi-b",
+      "head": "fastly",
+      "pattern_id": 6
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "server": [
+        "Apache-Coyote/1.1"
+      ]
+    },
+    "expect": {
+      "result": true,
+      "item_id": 4,
+      "key": "apache",
+      "head": "apache-coyote/1.1",
+      "pattern_id": 2
+    }
+  }
+]

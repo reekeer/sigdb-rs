@@ -1,0 +1,46 @@
+{
+  "rules": {
+    "first": {
+      "c": [
+        "xyz"
+      ]
+    },
+    "second": {
+      "c": [
+        "bcd",
+        "cd"
+      ]
+    },
+    "third": {
+      "c": [
+        "abcd"
+      ],
+      "js": "ab"
+    },
+    "fourth": {
+      "js": [
+        "b",
+        "ab",
+        "a"
+      ]
+    },
+    "fifth": {
+      "js": "b",
+      "c": "cd"
+    },
+    "sixth": {
+      "headers": {
+        "X-A": "1",
+        "X-B": "2"
+      },
+      "meta": {
+        "g": "v"
+      }
+    }
+  },
+  "groups": {
+    "c": {
+      "match": "contains"
+    }
+  }
+}

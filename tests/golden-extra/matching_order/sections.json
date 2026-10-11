@@ -1,0 +1,7 @@
+{
+  "index/main": "d17a4c9f702fffcaf78a685696dc8177efd2b6bde5f42d90b9eff0293a9bd60b",
+  "automaton/main/headers": "e0d7053418239f560a57a2e2a1bbbd1bcf1abca8245b7987699108d4b98055bb",
+  "automaton/main/js": "de0419371892fe5d78efebad4e8b71a97d024518a1d4e891edb6ba50dd4b5e55",
+  "automaton/main/meta": "fb6f4ff0ed0c85f79635e69d77b0cc2442cc5e06bc9a3e5da1f9cdfa5dbdead5",
+  "automaton/main/c": "67726db2e743aaf05c9c5af47192f5687118c83f3c78ca609da510f9f30906ff"
+}

@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "10": {
+      "server": "　Apache　",
+      "features": [
+        "İstanbul"
+      ]
+    },
+    "2": {
+      "server": "STRASSE",
+      "features": [
+        "Straße"
+      ],
+      "cdn": "\u001cCloudFlare\u001f"
+    },
+    "sigma": {
+      "server": "ΣΑΣ",
+      "cms": "﻿Ghost"
+    },
+    "emoji": {
+      "server": "caddy 🚀",
+      "headers": {
+        "X-Ünï": "Wert"
+      }
+    }
+  },
+  "groups": {
+    "features": {
+      "ignore_case": true,
+      "trim": true
+    }
+  }
+}

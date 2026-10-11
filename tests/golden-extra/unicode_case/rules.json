@@ -1,0 +1,55 @@
+{
+  "cyrillic": {
+    "server": "\u041d\u0413\u0418\u041d\u041a\u0421"
+  },
+  "turkish-dotted": {
+    "cms": "\u0130stanbul"
+  },
+  "dotless": {
+    "cms": "\u0131SPARTA"
+  },
+  "sigma-final": {
+    "framework": "\u039f\u0394\u03a5\u03a3\u03a3\u0395\u03a5\u03a3"
+  },
+  "sigma-alone": {
+    "cdn": "\u03a3"
+  },
+  "sharp-s": {
+    "cdn": "Stra\u00dfe"
+  },
+  "capital-sharp": {
+    "api": "\u1e9e"
+  },
+  "kelvin": {
+    "tls": "\u212a"
+  },
+  "angstrom": {
+    "link": "\u212b"
+  },
+  "titlecase": {
+    "json": "\u01c5"
+  },
+  "greek-iota": {
+    "link": "\u1f88"
+  },
+  "deseret": {
+    "url": "\ud801\udc00"
+  },
+  "cherokee": {
+    "path": "\u13a0"
+  },
+  "georgian": {
+    "file": "\u1c90"
+  },
+  "roman": {
+    "subdomain": "\u216b"
+  },
+  "fullwidth": {
+    "script_src": "\uff21\uff22\uff23"
+  },
+  "headers-cyr": {
+    "headers": {
+      "\u0421\u0435\u0440\u0432\u0435\u0440": "\u0410\u043f\u0430\u0447"
+    }
+  }
+}

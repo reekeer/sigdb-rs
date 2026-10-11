@@ -1,0 +1,398 @@
+[
+  {
+    "call": "match_html",
+    "html": "<div class=x>",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<DIV CLASS=\"X\">",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<Kvg>",
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "tag-kelvin",
+      "head": "tag:kvg",
+      "pattern_id": 1
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<Kvg>",
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "tag-kelvin",
+      "head": "tag:kvg",
+      "pattern_id": 1
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<ſcript src=a>",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "tag-long-s",
+      "head": "tag:ſcript",
+      "pattern_id": 2
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<İmg>",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "tag-dotted-i",
+      "head": "tag:i̇mg",
+      "pattern_id": 3
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<ımg>",
+    "expect": {
+      "result": true,
+      "item_id": 4,
+      "key": "tag-dotless-i",
+      "head": "tag:ımg",
+      "pattern_id": 4
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<abćd>",
+    "expect": {
+      "result": true,
+      "item_id": 5,
+      "key": "combining-mn",
+      "head": "tag:abc:attr:d",
+      "pattern_id": 5
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<pqःr>",
+    "expect": {
+      "result": true,
+      "item_id": 7,
+      "key": "spacing-mc",
+      "head": "tag:pq:attr:r",
+      "pattern_id": 7
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<x‿y z=1>",
+    "expect": {
+      "result": true,
+      "item_id": 8,
+      "key": "connector-pc",
+      "head": "tag:x:attr:y",
+      "pattern_id": 8
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<p data＿id=7>",
+    "expect": {
+      "result": true,
+      "item_id": 10,
+      "key": "fullwidth-pc",
+      "head": "attr:id:value:7",
+      "pattern_id": 10
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<my-élément data-ü=\"Ö\">",
+    "expect": {
+      "result": true,
+      "item_id": 11,
+      "key": "letters",
+      "head": "tag:my-élément:attr:data-ü:value:ö",
+      "pattern_id": 11
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<h٣>",
+    "expect": {
+      "result": true,
+      "item_id": 12,
+      "key": "digits",
+      "head": "tag:h٣",
+      "pattern_id": 12
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<xⅫ>",
+    "expect": {
+      "result": true,
+      "item_id": 12,
+      "key": "digits",
+      "head": "tag:xⅻ",
+      "pattern_id": 13
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<y²>",
+    "expect": {
+      "result": true,
+      "item_id": 12,
+      "key": "digits",
+      "head": "tag:y²",
+      "pattern_id": 14
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<z½>",
+    "expect": {
+      "result": true,
+      "item_id": 12,
+      "key": "digits",
+      "head": "tag:z½",
+      "pattern_id": 15
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<a- b=1>",
+    "expect": {
+      "result": true,
+      "item_id": 13,
+      "key": "boundary",
+      "head": "tag:a:attr:b:value:1",
+      "pattern_id": 16
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<a:b- c>",
+    "expect": {
+      "result": true,
+      "item_id": 14,
+      "key": "namespaced",
+      "head": "tag:a:b",
+      "pattern_id": 17
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<a-->",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<é class=x>",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<　div class=x>",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<​div class=x>",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<﻿div class=x>",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<\u001cdiv class=x>",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<div class=\"x\">",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<span class　= \"x\"><div class=\"x\">",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<td w=x y>",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<td w=x﻿y>",
+    "expect": {
+      "result": true,
+      "item_id": 17,
+      "key": "unquoted",
+      "head": "tag:td:attr:w:value:x﻿y",
+      "pattern_id": 20
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<div class=\" x\u001c\">",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<div class=\"\">",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<i title=\"😀\">",
+    "expect": {
+      "result": true,
+      "item_id": 18,
+      "key": "astral",
+      "head": "attr:title:value:😀",
+      "pattern_id": 21
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<svg:rect :bind=1>",
+    "expect": {
+      "result": true,
+      "item_id": 15,
+      "key": "svg",
+      "head": "tag:svg:rect:attr::bind",
+      "pattern_id": 18
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<div _ngcontent-c0 :bind=1>",
+    "expect": {
+      "result": true,
+      "item_id": 16,
+      "key": "underscore",
+      "head": "attr:_ngcontent-c0",
+      "pattern_id": 19
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<div a=\"<b>\">",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<div\nclass=\"x\"\n>",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "< div class='x'>",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "div-class",
+      "head": "tag:div:attr:class:value:x",
+      "pattern_id": 0
+    }
+  }
+]

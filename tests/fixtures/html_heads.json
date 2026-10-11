@@ -1,0 +1,646 @@
+[
+  {
+    "html": "<canvas id=\"c\"></canvas>",
+    "heads": [
+      "tag:canvas",
+      "tag:canvas:attr:id",
+      "tag:canvas:attr:id:value:c",
+      "attr:id",
+      "attr:id:value:c"
+    ]
+  },
+  {
+    "html": "<svelte-app></svelte-app>",
+    "heads": [
+      "tag:svelte-app"
+    ]
+  },
+  {
+    "html": "<div data-reactroot=\"\">x</div>",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:data-reactroot",
+      "attr:data-reactroot"
+    ]
+  },
+  {
+    "html": "<app-root ng-version=\"17.0.1\"></app-root>",
+    "heads": [
+      "tag:app-root",
+      "tag:app-root:attr:ng-version",
+      "tag:app-root:attr:ng-version:value:17.0.1",
+      "attr:ng-version",
+      "attr:ng-version:value:17.0.1"
+    ]
+  },
+  {
+    "html": "<my-app ng-version=\"17\"></my-app>",
+    "heads": [
+      "tag:my-app",
+      "tag:my-app:attr:ng-version",
+      "tag:my-app:attr:ng-version:value:17",
+      "attr:ng-version",
+      "attr:ng-version:value:17"
+    ]
+  },
+  {
+    "html": "<meta name=\"shopify-checkout-api-token\" content=\"x\">",
+    "heads": [
+      "tag:meta",
+      "tag:meta:attr:name",
+      "tag:meta:attr:name:value:shopify-checkout-api-token",
+      "attr:name",
+      "attr:name:value:shopify-checkout-api-token",
+      "tag:meta:attr:content",
+      "tag:meta:attr:content:value:x",
+      "attr:content",
+      "attr:content:value:x"
+    ]
+  },
+  {
+    "html": "<META NAME='Shopify-Checkout-API-Token'>",
+    "heads": [
+      "tag:META",
+      "tag:META:attr:NAME",
+      "tag:META:attr:NAME:value:Shopify-Checkout-API-Token",
+      "attr:NAME",
+      "attr:NAME:value:Shopify-Checkout-API-Token"
+    ]
+  },
+  {
+    "html": "<blink>old</blink>",
+    "heads": [
+      "tag:blink"
+    ]
+  },
+  {
+    "html": "<body data-turbo=\"false\">",
+    "heads": [
+      "tag:body",
+      "tag:body:attr:data-turbo",
+      "tag:body:attr:data-turbo:value:false",
+      "attr:data-turbo",
+      "attr:data-turbo:value:false"
+    ]
+  },
+  {
+    "html": "<p class=\"x\">plain</p>",
+    "heads": [
+      "tag:p",
+      "tag:p:attr:class",
+      "tag:p:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "",
+    "heads": []
+  },
+  {
+    "html": "<html><body>nginx</body></html>",
+    "heads": [
+      "tag:html",
+      "tag:body"
+    ]
+  },
+  {
+    "html": "<VIDEO src=x>",
+    "heads": [
+      "tag:VIDEO",
+      "tag:VIDEO:attr:src",
+      "tag:VIDEO:attr:src:value:x",
+      "attr:src",
+      "attr:src:value:x"
+    ]
+  },
+  {
+    "html": "<div class=x>",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "<DIV CLASS=\"X\">",
+    "heads": [
+      "tag:DIV",
+      "tag:DIV:attr:CLASS",
+      "tag:DIV:attr:CLASS:value:X",
+      "attr:CLASS",
+      "attr:CLASS:value:X"
+    ]
+  },
+  {
+    "html": "<Kvg>",
+    "heads": [
+      "tag:Kvg"
+    ]
+  },
+  {
+    "html": "<Kvg>",
+    "heads": [
+      "tag:Kvg"
+    ]
+  },
+  {
+    "html": "<ſcript src=a>",
+    "heads": [
+      "tag:ſcript",
+      "tag:ſcript:attr:src",
+      "tag:ſcript:attr:src:value:a",
+      "attr:src",
+      "attr:src:value:a"
+    ]
+  },
+  {
+    "html": "<İmg>",
+    "heads": [
+      "tag:İmg"
+    ]
+  },
+  {
+    "html": "<ımg>",
+    "heads": [
+      "tag:ımg"
+    ]
+  },
+  {
+    "html": "<abćd>",
+    "heads": [
+      "tag:abc",
+      "tag:abc:attr:d",
+      "attr:d"
+    ]
+  },
+  {
+    "html": "<pqःr>",
+    "heads": [
+      "tag:pq",
+      "tag:pq:attr:r",
+      "attr:r"
+    ]
+  },
+  {
+    "html": "<x‿y z=1>",
+    "heads": [
+      "tag:x",
+      "tag:x:attr:y",
+      "attr:y",
+      "tag:x:attr:z",
+      "tag:x:attr:z:value:1",
+      "attr:z",
+      "attr:z:value:1"
+    ]
+  },
+  {
+    "html": "<p data＿id=7>",
+    "heads": [
+      "tag:p",
+      "tag:p:attr:data",
+      "attr:data",
+      "tag:p:attr:id",
+      "tag:p:attr:id:value:7",
+      "attr:id",
+      "attr:id:value:7"
+    ]
+  },
+  {
+    "html": "<my-élément data-ü=\"Ö\">",
+    "heads": [
+      "tag:my-élément",
+      "tag:my-élément:attr:data-ü",
+      "tag:my-élément:attr:data-ü:value:Ö",
+      "attr:data-ü",
+      "attr:data-ü:value:Ö"
+    ]
+  },
+  {
+    "html": "<h٣>",
+    "heads": [
+      "tag:h٣"
+    ]
+  },
+  {
+    "html": "<xⅫ>",
+    "heads": [
+      "tag:xⅫ"
+    ]
+  },
+  {
+    "html": "<y²>",
+    "heads": [
+      "tag:y²"
+    ]
+  },
+  {
+    "html": "<z½>",
+    "heads": [
+      "tag:z½"
+    ]
+  },
+  {
+    "html": "<a- b=1>",
+    "heads": [
+      "tag:a",
+      "tag:a:attr:b",
+      "tag:a:attr:b:value:1",
+      "attr:b",
+      "attr:b:value:1"
+    ]
+  },
+  {
+    "html": "<a:b- c>",
+    "heads": [
+      "tag:a:b",
+      "tag:a:b:attr:c",
+      "attr:c"
+    ]
+  },
+  {
+    "html": "<a-->",
+    "heads": [
+      "tag:a"
+    ]
+  },
+  {
+    "html": "<é class=x>",
+    "heads": []
+  },
+  {
+    "html": "<　div class=x>",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "<​div class=x>",
+    "heads": []
+  },
+  {
+    "html": "<﻿div class=x>",
+    "heads": []
+  },
+  {
+    "html": "<\u001cdiv class=x>",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "<div class=\"x\">",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "<span class　= \"x\"><div class=\"x\">",
+    "heads": [
+      "tag:span",
+      "tag:span:attr:class",
+      "tag:span:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x",
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x"
+    ]
+  },
+  {
+    "html": "<td w=x y>",
+    "heads": [
+      "tag:td",
+      "tag:td:attr:w",
+      "tag:td:attr:w:value:x",
+      "attr:w",
+      "attr:w:value:x",
+      "tag:td:attr:y",
+      "attr:y"
+    ]
+  },
+  {
+    "html": "<td w=x﻿y>",
+    "heads": [
+      "tag:td",
+      "tag:td:attr:w",
+      "tag:td:attr:w:value:x﻿y",
+      "attr:w",
+      "attr:w:value:x﻿y"
+    ]
+  },
+  {
+    "html": "<div class=\" x\u001c\">",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "<div class=\"\">",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "attr:class"
+    ]
+  },
+  {
+    "html": "<i title=\"😀\">",
+    "heads": [
+      "tag:i",
+      "tag:i:attr:title",
+      "tag:i:attr:title:value:😀",
+      "attr:title",
+      "attr:title:value:😀"
+    ]
+  },
+  {
+    "html": "<svg:rect :bind=1>",
+    "heads": [
+      "tag:svg:rect",
+      "tag:svg:rect:attr::bind",
+      "tag:svg:rect:attr::bind:value:1",
+      "attr::bind",
+      "attr::bind:value:1"
+    ]
+  },
+  {
+    "html": "<div _ngcontent-c0 :bind=1>",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:_ngcontent-c0",
+      "attr:_ngcontent-c0",
+      "tag:div:attr::bind",
+      "tag:div:attr::bind:value:1",
+      "attr::bind",
+      "attr::bind:value:1"
+    ]
+  },
+  {
+    "html": "<div a=\"<b>\">",
+    "heads": [
+      "tag:b"
+    ]
+  },
+  {
+    "html": "<div\nclass=\"x\"\n>",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "< div class='x'>",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "<script src=\"　/js/app.js \">",
+    "heads": [
+      "tag:script",
+      "tag:script:attr:src",
+      "tag:script:attr:src:value:/js/app.js",
+      "attr:src",
+      "attr:src:value:/js/app.js"
+    ]
+  },
+  {
+    "html": "<script src=\" /js/app.js﻿\">",
+    "heads": [
+      "tag:script",
+      "tag:script:attr:src",
+      "tag:script:attr:src:value:/js/app.js﻿",
+      "attr:src",
+      "attr:src:value:/js/app.js﻿"
+    ]
+  },
+  {
+    "html": "no tags at all",
+    "heads": []
+  },
+  {
+    "html": "<div class=a><div class=a><span class=a>",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:a",
+      "attr:class",
+      "attr:class:value:a",
+      "tag:span",
+      "tag:span:attr:class",
+      "tag:span:attr:class:value:a"
+    ]
+  },
+  {
+    "html": "<a href=\"/x\" data-id='7' disabled hidden=\"\" title = \"  t  \">",
+    "heads": [
+      "tag:a",
+      "tag:a:attr:href",
+      "tag:a:attr:href:value:/x",
+      "attr:href",
+      "attr:href:value:/x",
+      "tag:a:attr:data-id",
+      "tag:a:attr:data-id:value:7",
+      "attr:data-id",
+      "attr:data-id:value:7",
+      "tag:a:attr:disabled",
+      "attr:disabled",
+      "tag:a:attr:hidden",
+      "attr:hidden",
+      "tag:a:attr:title",
+      "tag:a:attr:title:value:t",
+      "attr:title",
+      "attr:title:value:t"
+    ]
+  },
+  {
+    "html": "<meta name=\"generator\" content=\"WordPress 6.4\"><link rel=\"https://api.w.org/\" href=\"/wp-json/\">",
+    "heads": [
+      "tag:meta",
+      "tag:meta:attr:name",
+      "tag:meta:attr:name:value:generator",
+      "attr:name",
+      "attr:name:value:generator",
+      "tag:meta:attr:content",
+      "tag:meta:attr:content:value:WordPress 6.4",
+      "attr:content",
+      "attr:content:value:WordPress 6.4",
+      "tag:link",
+      "tag:link:attr:rel",
+      "tag:link:attr:rel:value:https://api.w.org/",
+      "attr:rel",
+      "attr:rel:value:https://api.w.org/",
+      "tag:link:attr:href",
+      "tag:link:attr:href:value:/wp-json/",
+      "attr:href",
+      "attr:href:value:/wp-json/"
+    ]
+  },
+  {
+    "html": "<img src=x onerror=`a`>",
+    "heads": [
+      "tag:img",
+      "tag:img:attr:src",
+      "tag:img:attr:src:value:x",
+      "attr:src",
+      "attr:src:value:x",
+      "tag:img:attr:onerror",
+      "attr:onerror",
+      "tag:img:attr:a",
+      "attr:a"
+    ]
+  },
+  {
+    "html": "<<div>>",
+    "heads": [
+      "tag:div"
+    ]
+  },
+  {
+    "html": "<div <span>",
+    "heads": [
+      "tag:span"
+    ]
+  },
+  {
+    "html": "</div>",
+    "heads": []
+  },
+  {
+    "html": "<!-- <div class=x> -->",
+    "heads": [
+      "tag:div",
+      "tag:div:attr:class",
+      "tag:div:attr:class:value:x",
+      "attr:class",
+      "attr:class:value:x"
+    ]
+  },
+  {
+    "html": "<br/>",
+    "heads": [
+      "tag:br"
+    ]
+  },
+  {
+    "html": "<input value=a=b>",
+    "heads": [
+      "tag:input",
+      "tag:input:attr:value",
+      "tag:input:attr:value:value:a",
+      "attr:value",
+      "attr:value:value:a",
+      "tag:input:attr:b",
+      "attr:b"
+    ]
+  },
+  {
+    "html": "<x a=\"1\"b='2'c=3>",
+    "heads": [
+      "tag:x",
+      "tag:x:attr:a",
+      "tag:x:attr:a:value:1",
+      "attr:a",
+      "attr:a:value:1",
+      "tag:x:attr:b",
+      "tag:x:attr:b:value:2",
+      "attr:b",
+      "attr:b:value:2",
+      "tag:x:attr:c",
+      "tag:x:attr:c:value:3",
+      "attr:c",
+      "attr:c:value:3"
+    ]
+  },
+  {
+    "html": "<ǅx>",
+    "heads": []
+  },
+  {
+    "html": "<Á b́c=1>",
+    "heads": [
+      "tag:A",
+      "tag:A:attr:b",
+      "attr:b",
+      "tag:A:attr:c",
+      "tag:A:attr:c:value:1",
+      "attr:c",
+      "attr:c:value:1"
+    ]
+  },
+  {
+    "html": "<t ‿a=1 ＿b=2 _c=3>",
+    "heads": [
+      "tag:t",
+      "tag:t:attr:a",
+      "tag:t:attr:a:value:1",
+      "attr:a",
+      "attr:a:value:1",
+      "tag:t:attr:b",
+      "tag:t:attr:b:value:2",
+      "attr:b",
+      "attr:b:value:2",
+      "tag:t:attr:_c",
+      "tag:t:attr:_c:value:3",
+      "attr:_c",
+      "attr:_c:value:3"
+    ]
+  },
+  {
+    "html": "<t à=1>",
+    "heads": [
+      "tag:t",
+      "tag:t:attr:a",
+      "attr:a"
+    ]
+  },
+  {
+    "html": "<t data-٣=١>",
+    "heads": [
+      "tag:t",
+      "tag:t:attr:data-٣",
+      "tag:t:attr:data-٣:value:١",
+      "attr:data-٣",
+      "attr:data-٣:value:١"
+    ]
+  },
+  {
+    "html": "<𝐀 a=1>",
+    "heads": []
+  },
+  {
+    "html": "<a𝐀 b𝐀=😀>",
+    "heads": [
+      "tag:a𝐀",
+      "tag:a𝐀:attr:b𝐀",
+      "tag:a𝐀:attr:b𝐀:value:😀",
+      "attr:b𝐀",
+      "attr:b𝐀:value:😀"
+    ]
+  }
+]

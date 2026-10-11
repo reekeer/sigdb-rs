@@ -1,0 +1,724 @@
+[
+  {
+    "call": "match_group",
+    "group": "headers",
+    "value": "Drupal 10 (https://www.drupal.org)",
+    "name": "X-Generator",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "headers-rule",
+      "head": "x-generator:drupal 10 (https://www.drupal.org)",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "headers-rule",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "React",
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "js-rule",
+      "head": "react",
+      "pattern_id": 1,
+      "all": [
+        [
+          1,
+          "js-rule",
+          1,
+          [
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "meta",
+    "value": "WordPress 6.4.2",
+    "name": "generator",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "meta-rule",
+      "head": "generator:wordpress 6.4.2",
+      "pattern_id": 2,
+      "all": [
+        [
+          2,
+          "meta-rule",
+          1,
+          [
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "script_src",
+    "value": "https://cdn.jsdelivr.net/npm/vue@3",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "https://cdn.jsdelivr.net/npm/vue@3",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "css",
+    "value": "/static/bootstrap.min.css",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "/static/bootstrap.min.css",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "url",
+    "value": "https://example.com/wp-admin/",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "https://example.com/wp-admin/",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "path",
+    "value": "/.git/HEAD",
+    "expect": {
+      "result": true,
+      "item_id": 12,
+      "key": "path-rule",
+      "head": "/.git/head",
+      "pattern_id": 13,
+      "all": [
+        [
+          12,
+          "path-rule",
+          1,
+          [
+            13
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "file",
+    "value": "composer.json",
+    "expect": {
+      "result": true,
+      "item_id": 13,
+      "key": "file-rule",
+      "head": "composer.json",
+      "pattern_id": 14,
+      "all": [
+        [
+          13,
+          "file-rule",
+          1,
+          [
+            14
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "dns",
+    "value": "v=spf1 include:_spf.google.com ~all",
+    "expect": {
+      "result": true,
+      "item_id": 14,
+      "key": "dns-rule",
+      "head": "v=spf1 include:_spf.google.com ~all",
+      "pattern_id": 15,
+      "all": [
+        [
+          14,
+          "dns-rule",
+          1,
+          [
+            15
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "subdomain",
+    "value": "jenkins.example.com",
+    "expect": {
+      "result": true,
+      "item_id": 15,
+      "key": "subdomain-rule",
+      "head": "jenkins.example.com",
+      "pattern_id": 16,
+      "all": [
+        [
+          15,
+          "subdomain-rule",
+          1,
+          [
+            16
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "link",
+    "value": "<https://fonts.gstatic.com>; rel=preconnect",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "<https://fonts.gstatic.com>; rel=preconnect",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "json",
+    "value": "{\"__NEXT_DATA__\":{}}",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "{\"__next_data__\":{}}",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "script_src",
+    "value": "cdn.jsdelivr.net/npm/vue@3",
+    "expect": {
+      "result": true,
+      "item_id": 9,
+      "key": "script-src-rule",
+      "head": "cdn.jsdelivr.net/npm/vue@3",
+      "pattern_id": 10,
+      "all": [
+        [
+          9,
+          "script-src-rule",
+          1,
+          [
+            10
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "css",
+    "value": "bootstrap.min.css?v=5",
+    "expect": {
+      "result": true,
+      "item_id": 10,
+      "key": "css-rule",
+      "head": "bootstrap.min.css?v=5",
+      "pattern_id": 11,
+      "all": [
+        [
+          10,
+          "css-rule",
+          1,
+          [
+            11
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "url",
+    "value": "/wp-admin/index.php",
+    "expect": {
+      "result": true,
+      "item_id": 11,
+      "key": "url-rule",
+      "head": "/wp-admin/index.php",
+      "pattern_id": 12,
+      "all": [
+        [
+          11,
+          "url-rule",
+          1,
+          [
+            12
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "link",
+    "value": "rel=preconnect; crossorigin",
+    "expect": {
+      "result": true,
+      "item_id": 16,
+      "key": "link-rule",
+      "head": "rel=preconnect; crossorigin",
+      "pattern_id": 17,
+      "all": [
+        [
+          16,
+          "link-rule",
+          1,
+          [
+            17
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "json",
+    "value": "\"__NEXT_DATA__\"",
+    "expect": {
+      "result": true,
+      "item_id": 17,
+      "key": "json-rule",
+      "head": "\"__next_data__\"",
+      "pattern_id": 18,
+      "all": [
+        [
+          17,
+          "json-rule",
+          1,
+          [
+            18
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "api",
+    "value": "/graphql",
+    "expect": {
+      "result": true,
+      "item_id": 18,
+      "key": "api-rule",
+      "head": "/graphql",
+      "pattern_id": 19,
+      "all": [
+        [
+          18,
+          "api-rule",
+          1,
+          [
+            19
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "tls",
+    "value": "Let's Encrypt R3",
+    "expect": {
+      "result": true,
+      "item_id": 19,
+      "key": "tls-rule",
+      "head": "let's encrypt r3",
+      "pattern_id": 20,
+      "all": [
+        [
+          19,
+          "tls-rule",
+          1,
+          [
+            20
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "Caddy",
+    "expect": {
+      "result": true,
+      "item_id": 20,
+      "key": "server-rule",
+      "head": "caddy",
+      "pattern_id": 21,
+      "all": [
+        [
+          20,
+          "server-rule",
+          1,
+          [
+            21
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "framework",
+    "value": "Django 5",
+    "expect": {
+      "result": true,
+      "item_id": 21,
+      "key": "framework-rule",
+      "head": "django 5",
+      "pattern_id": 22,
+      "all": [
+        [
+          21,
+          "framework-rule",
+          1,
+          [
+            22
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cms",
+    "value": "Ghost 5.0",
+    "expect": {
+      "result": true,
+      "item_id": 22,
+      "key": "cms-rule",
+      "head": "ghost 5.0",
+      "pattern_id": 23,
+      "all": [
+        [
+          22,
+          "cms-rule",
+          1,
+          [
+            23
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cdn",
+    "value": "AkamaiGHost",
+    "expect": {
+      "result": true,
+      "item_id": 23,
+      "key": "cdn-rule",
+      "head": "akamaighost",
+      "pattern_id": 24,
+      "all": [
+        [
+          23,
+          "cdn-rule",
+          1,
+          [
+            24
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "html",
+    "value": "tag:canvas",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "html-string",
+      "head": "tag:canvas",
+      "pattern_id": 3,
+      "all": [
+        [
+          3,
+          "html-string",
+          1,
+          [
+            3
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "Vue",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "vue",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cdn",
+    "value": "Fastly",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "fastly",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "meta",
+    "value": "WordPress",
+    "expect": {
+      "error": "FormatError",
+      "message": "group meta requires a name"
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "headers",
+    "value": "Drupal",
+    "expect": {
+      "error": "FormatError",
+      "message": "group headers requires a name"
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "bogus",
+    "value": "x",
+    "expect": {
+      "error": "FormatError",
+      "message": "unknown group: bogus"
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<canvas id=\"c\"></canvas>",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "html-string",
+      "head": "tag:canvas",
+      "pattern_id": 3
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<svelte-app></svelte-app>",
+    "expect": {
+      "result": true,
+      "item_id": 4,
+      "key": "html-tag",
+      "head": "tag:svelte-app",
+      "pattern_id": 4
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<div data-reactroot=\"\">x</div>",
+    "expect": {
+      "result": true,
+      "item_id": 5,
+      "key": "html-tag-attr",
+      "head": "tag:div:attr:data-reactroot",
+      "pattern_id": 5
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<app-root ng-version=\"17.0.1\"></app-root>",
+    "expect": {
+      "result": true,
+      "item_id": 6,
+      "key": "html-attr-value",
+      "head": "attr:ng-version:value:17.0.1",
+      "pattern_id": 6
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<my-app ng-version=\"17\"></my-app>",
+    "expect": {
+      "result": true,
+      "item_id": 6,
+      "key": "html-attr-value",
+      "head": "attr:ng-version:value:17",
+      "pattern_id": 6
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<meta name=\"shopify-checkout-api-token\" content=\"x\">",
+    "expect": {
+      "result": true,
+      "item_id": 7,
+      "key": "html-full",
+      "head": "tag:meta:attr:name:value:shopify-checkout-api-token",
+      "pattern_id": 7
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<META NAME='Shopify-Checkout-API-Token'>",
+    "expect": {
+      "result": true,
+      "item_id": 7,
+      "key": "html-full",
+      "head": "tag:meta:attr:name:value:shopify-checkout-api-token",
+      "pattern_id": 7
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<blink>old</blink>",
+    "expect": {
+      "result": true,
+      "item_id": 8,
+      "key": "html-list",
+      "head": "tag:blink",
+      "pattern_id": 8
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<body data-turbo=\"false\">",
+    "expect": {
+      "result": true,
+      "item_id": 8,
+      "key": "html-list",
+      "head": "attr:data-turbo",
+      "pattern_id": 9
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<p class=\"x\">plain</p>",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "meta": {
+        "generator": "WordPress 6"
+      },
+      "cdn": "Akamai"
+    },
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "meta-rule",
+      "head": "generator:wordpress 6",
+      "pattern_id": 2
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "js": [
+        "jquery",
+        "react"
+      ],
+      "cms": "Ghost"
+    },
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "js-rule",
+      "head": "react",
+      "pattern_id": 1
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "html": {
+        "tag": "canvas"
+      }
+    },
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "html-string",
+      "head": "tag:canvas",
+      "pattern_id": 3
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "headers": {
+        "X-Generator": "Joomla"
+      }
+    },
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  }
+]

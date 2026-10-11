@@ -1,0 +1,231 @@
+[
+  {
+    "call": "match",
+    "head": "js:foo",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "js:foo",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "foo",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "dup",
+      "head": "foo",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "dup",
+          1,
+          [
+            0
+          ]
+        ],
+        [
+          4,
+          "dup-other",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "FOO.bundle.js",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "dup",
+      "head": "foo.bundle.js",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "dup",
+          1,
+          [
+            0
+          ]
+        ],
+        [
+          4,
+          "dup-other",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "bar",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "bar",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "css",
+    "value": "a.css",
+    "expect": {
+      "result": true,
+      "item_id": 4,
+      "key": "dup-other",
+      "head": "a.css",
+      "pattern_id": 1,
+      "all": [
+        [
+          4,
+          "dup-other",
+          1,
+          [
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "css",
+    "value": "reset.css",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "reset.css",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_all",
+    "group": "js",
+    "values": [
+      "foo",
+      "foo.min.js",
+      "x"
+    ],
+    "expect": [
+      [
+        0,
+        "dup",
+        1,
+        [
+          0
+        ]
+      ],
+      [
+        4,
+        "dup-other",
+        1,
+        [
+          0
+        ]
+      ]
+    ]
+  },
+  {
+    "call": "match_tokens",
+    "group": "css",
+    "tokens": [
+      "a.css",
+      "A.css"
+    ],
+    "expect": [
+      [
+        4,
+        1
+      ]
+    ]
+  },
+  {
+    "call": "pattern_count",
+    "item_id": 0,
+    "expect": 1
+  },
+  {
+    "call": "pattern_count",
+    "item_id": 4,
+    "expect": 2
+  },
+  {
+    "call": "pattern_count",
+    "item_id": 4,
+    "group": "css",
+    "expect": 1
+  },
+  {
+    "call": "match_search",
+    "search": {},
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "css": [
+        "a.css"
+      ]
+    },
+    "expect": {
+      "result": true,
+      "item_id": 4,
+      "key": "dup-other",
+      "head": "a.css",
+      "pattern_id": 1
+    }
+  },
+  {
+    "call": "item",
+    "key": "no-groups",
+    "expect": [
+      2,
+      null
+    ]
+  },
+  {
+    "call": "item",
+    "key": "missing",
+    "expect": null
+  }
+]

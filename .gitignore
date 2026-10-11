@@ -1,0 +1,7 @@
+/target
+*.sigdb
+!tests/fixtures/**/*.sigdb
+.DS_Store
+.idea/
+.vscode/
+__pycache__/

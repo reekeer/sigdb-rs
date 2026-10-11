@@ -1,0 +1,229 @@
+[
+  {
+    "call": "match",
+    "head": "js:lib",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "js:lib",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "20:x",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "1",
+      "head": "20:x",
+      "pattern_id": 1,
+      "all": [
+        [
+          2,
+          "1",
+          1,
+          [
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "3: x",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "1",
+      "head": "3:x",
+      "pattern_id": 2,
+      "all": [
+        [
+          2,
+          "1",
+          1,
+          [
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "10:z",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "1",
+      "head": "10:z",
+      "pattern_id": 4,
+      "all": [
+        [
+          2,
+          "1",
+          1,
+          [
+            4
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "10:q",
+    "expect": {
+      "result": true,
+      "item_id": 10,
+      "key": "h10",
+      "head": "10:q",
+      "pattern_id": 13,
+      "all": [
+        [
+          10,
+          "h10",
+          1,
+          [
+            13
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "meta",
+    "value": "v",
+    "name": "10",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "a",
+      "head": "10:v",
+      "pattern_id": 6,
+      "all": [
+        [
+          3,
+          "a",
+          1,
+          [
+            6
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "zero",
+    "expect": {
+      "result": true,
+      "item_id": 4,
+      "key": "0",
+      "head": "zero",
+      "pattern_id": 7,
+      "all": [
+        [
+          4,
+          "0",
+          1,
+          [
+            7
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "big",
+    "expect": {
+      "result": true,
+      "item_id": 7,
+      "key": "4294967295",
+      "head": "big",
+      "pattern_id": 10,
+      "all": [
+        [
+          7,
+          "4294967295",
+          1,
+          [
+            10
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "headers": {
+        "10": "q",
+        "9": "q"
+      }
+    },
+    "expect": {
+      "result": true,
+      "item_id": 10,
+      "key": "h10",
+      "head": "10:q",
+      "pattern_id": 13
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "headers": {
+        "9": "q",
+        "10": "q"
+      }
+    },
+    "expect": {
+      "result": true,
+      "item_id": 9,
+      "key": "h9",
+      "head": "9:q",
+      "pattern_id": 12
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "meta": {
+        "10": "v",
+        "9": "v"
+      }
+    },
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "a",
+      "head": "10:v",
+      "pattern_id": 6
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "js": [
+        "zero",
+        "lib"
+      ]
+    },
+    "expect": {
+      "result": true,
+      "item_id": 4,
+      "key": "0",
+      "head": "zero",
+      "pattern_id": 7
+    }
+  }
+]

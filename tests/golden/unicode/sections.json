@@ -1,0 +1,7 @@
+{
+  "index/main": "e819ef9e12c4d8a73f83a998c0f6bd6abfc3bc7d296d0c8b95bfc6bbff21988a",
+  "automaton/main/headers": "4dda044d49232d129ddbc23c50597631e3dc066d67d2ee1fa9663999c08dc9a7",
+  "automaton/main/server": "c7a4abbad6f0d2a7144eb062ecc8f5a841f6ff960d8b435b7ba51a96e5c0ed70",
+  "automaton/main/cms": "e92d0700dd90d5e33454e80f2b73f3f30ba62cdeabe9b2c81f6f06e52415e7a0",
+  "automaton/main/cdn": "faa118fc85596560f44ca1bc54c89d056bf9759bf74a3f56528aa6e9851983f3"
+}

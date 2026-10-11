@@ -1,0 +1,38 @@
+{
+  "em-space": {
+    "js": "\u2003React\u3000"
+  },
+  "file-sep": {
+    "cdn": "\u001cFastly\u001f"
+  },
+  "nel-nbsp": {
+    "headers": {
+      "\u0085X-Cache\u00a0": "\u1680HIT\u205f"
+    }
+  },
+  "bom-kept": {
+    "cms": "\ufeffGhost"
+  },
+  "zwsp-kept": {
+    "css": "\u200bfoo"
+  },
+  "line-sep": {
+    "server": "\u202fCaddy\u2028\u2029"
+  },
+  "ogham-inner": {
+    "framework": "Dj\u1680ango"
+  },
+  "vt-ff": {
+    "tls": "\u000b\fLet's Encrypt\r\n\t"
+  },
+  "mongolian": {
+    "dns": "\u180espf"
+  },
+  "html-strip": {
+    "html": {
+      "tag": "script",
+      "attr": "src",
+      "value": "\u3000/js/app.js\u001e"
+    }
+  }
+}

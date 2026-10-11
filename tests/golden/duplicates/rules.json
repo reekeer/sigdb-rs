@@ -1,0 +1,7 @@
+{
+  "dup": {"js": ["foo", "foo", " FOO "]},
+  "empty-list": {"js": []},
+  "no-groups": {},
+  "null-group": {"css": null},
+  "dup-other": {"js": "FOO", "css": ["a.css", "A.CSS "]}
+}

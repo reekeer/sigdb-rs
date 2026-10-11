@@ -1,0 +1,65 @@
+[
+  {
+    "value": "",
+    "repr": "''"
+  },
+  {
+    "value": "a",
+    "repr": "'a'"
+  },
+  {
+    "value": "a'b",
+    "repr": "\"a'b\""
+  },
+  {
+    "value": "a\"b",
+    "repr": "'a\"b'"
+  },
+  {
+    "value": "a'\"b",
+    "repr": "'a\\'\"b'"
+  },
+  {
+    "value": "\u0000\u001f\u007f\u0080\u0085\u00a0\u00ad\u00ff",
+    "repr": "'\\x00\\x1f\\x7f\\x80\\x85\\xa0\\xad\u00ff'"
+  },
+  {
+    "value": "\t\n\r\\",
+    "repr": "'\\t\\n\\r\\\\'"
+  },
+  {
+    "value": "\u200b\u2028\u2029\u3000\ufeff\uffff",
+    "repr": "'\\u200b\\u2028\\u2029\\u3000\\ufeff\\uffff'"
+  },
+  {
+    "value": "\ud83d\ude00\udb40\udc01\udbff\udfff\ud800\udc00",
+    "repr": "'\ud83d\ude00\\U000e0001\\U0010ffff\ud800\udc00'"
+  },
+  {
+    "value": "caf\u00e9 \u0130 \u03a3",
+    "repr": "'caf\u00e9 \u0130 \u03a3'"
+  },
+  {
+    "value": "bad/name",
+    "repr": "'bad/name'"
+  },
+  {
+    "value": "a b",
+    "repr": "'a b'"
+  },
+  {
+    "value": "\u0378\u0590",
+    "repr": "'\\u0378\\u0590'"
+  },
+  {
+    "value": "\udb80\udc00",
+    "repr": "'\\U000f0000'"
+  },
+  {
+    "list": [
+      "case",
+      "a'b"
+    ],
+    "repr": "['case', \"a'b\"]"
+  }
+]

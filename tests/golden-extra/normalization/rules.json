@@ -1,0 +1,33 @@
+{
+  "hdr": {
+    "headers": {
+      " X-Powered-By ": " PHP/8 "
+    }
+  },
+  "meta-sp": {
+    "meta": {
+      " Generator ": " Hugo "
+    }
+  },
+  "inner": {
+    "meta": {
+      "a b": "c d"
+    }
+  },
+  "colon-in-value": {
+    "headers": {
+      "Link": "<https://x>; rel=preload"
+    }
+  },
+  "colon-in-name": {
+    "headers": {
+      "a:b": "c"
+    }
+  },
+  "list-sp": {
+    "js": "  Vue  "
+  },
+  "html-strip": {
+    "html": "  tag:video  "
+  }
+}

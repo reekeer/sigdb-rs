@@ -1,0 +1,308 @@
+[
+  {
+    "call": "match",
+    "head": "  js:React.min.js  ",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "js:react.min.js",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "　JS　:　react",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "js:react",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "\u001c\u001d\u001e\u001fcdn:FASTLY",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "cdn:fastly",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "X-Cache: HIT",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "nel-nbsp",
+      "head": "x-cache:hit",
+      "pattern_id": 2,
+      "all": [
+        [
+          2,
+          "nel-nbsp",
+          1,
+          [
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "﻿cms:ghost",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "﻿cms:ghost",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "cms:﻿Ghost",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "cms:﻿ghost",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "cms:ghost",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "cms:ghost",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "css:​foo",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "css:​foo",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "​css:foo",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "​css:foo",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "server: caddy ",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "server:caddy",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "framework:dj ango",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "framework:dj ango",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "framework:django",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "framework:django",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "tls:let's encrypt",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "tls:let's encrypt",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "dns:᠎spf",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "dns:᠎spf",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "᠎dns:spf",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "᠎dns:spf",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match",
+    "head": "             ",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "  React　",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "em-space",
+      "head": "react",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "em-space",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "headers",
+    "value": " hit",
+    "name": " X-Cache",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "nel-nbsp",
+      "head": "x-cache:hit",
+      "pattern_id": 2,
+      "all": [
+        [
+          2,
+          "nel-nbsp",
+          1,
+          [
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cdn",
+    "value": "\u001dfastly.net",
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "file-sep",
+      "head": "fastly.net",
+      "pattern_id": 1,
+      "all": [
+        [
+          1,
+          "file-sep",
+          1,
+          [
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<script src=\"　/js/app.js \">",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_html",
+    "html": "<script src=\" /js/app.js﻿\">",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "",
+      "pattern_id": null
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "js": [
+        " nope",
+        "　react　"
+      ]
+    },
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "em-space",
+      "head": "react",
+      "pattern_id": 0
+    }
+  }
+]

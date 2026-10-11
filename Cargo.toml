@@ -1,0 +1,33 @@
+[package]
+name = "sigdb"
+version = "3.0.0"
+edition = "2024"
+rust-version = "1.85"
+description = ".sigdb trie/Aho-Corasick compiler and loader"
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/reekeer/sigdb-rs"
+repository = "https://github.com/reekeer/sigdb-rs"
+keywords = ["aho-corasick", "fingerprints", "sigdb", "signatures", "trie"]
+categories = ["encoding", "text-processing"]
+publish = false
+exclude = ["tests/fixtures", "tests/golden", "tests/golden-extra", "scripts"]
+
+[dependencies]
+indexmap = "2"
+hashbrown = { version = "0.17", default-features = false }
+sha2 = "0.10"
+zstd-safe = { version = "7", default-features = false, features = ["std"] }
+serde = { version = "1", optional = true }
+serde_json = { version = "1", optional = true, features = ["preserve_order"] }
+
+[features]
+default = ["serde"]
+serde = ["dep:serde", "dep:serde_json"]
+
+[dev-dependencies]
+serde_json = { version = "1", features = ["preserve_order"] }
+
+[profile.release]
+codegen-units = 1
+lto = "thin"

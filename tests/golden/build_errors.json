@@ -1,0 +1,354 @@
+[
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "js": ""
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "rule 'a': empty pattern in group js"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "cdn": "   "
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "rule 'a': empty pattern in group cdn"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "headers": {
+            "": "x"
+          }
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "rule 'a': empty name in group headers"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "headers": {
+            " ": ""
+          }
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "rule 'a': empty name in group headers"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "bogus": "x"
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "rule 'a': unknown group: bogus"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "features": "x"
+        }
+      },
+      "groups": {
+        "features": {
+          "match": "regex"
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "group features: match must be one of ['prefix', 'contains', 'exact']"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "features": "x"
+        }
+      },
+      "groups": {
+        "features": {
+          "case": true
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "group features has unknown config keys: ['case']"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "features": "x"
+        }
+      },
+      "groups": {
+        "features": {
+          "ignore_case": "yes"
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "group features: ignore_case and trim must be booleans"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {}
+      },
+      "groups": {
+        "data": {}
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "group name is reserved: data"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {}
+      },
+      "groups": {
+        "bad/name": {}
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "invalid group name: 'bad/name'"
+    }
+  },
+  {
+    "build": {
+      "rules": [
+        {
+          "a": {}
+        },
+        {
+          "a": {}
+        }
+      ]
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "duplicate rule key: 'a'"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "": {}
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "rule keys must be non-empty strings"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": "x"
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "rule 'a' must be an object"
+    }
+  },
+  {
+    "build": {
+      "rules": []
+    },
+    "expect": null
+  },
+  {
+    "build": {
+      "rules": "x"
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "rules must be a JSON object"
+    }
+  },
+  {
+    "build": {
+      "indexes": {
+        "bad/name": {
+          "rules": {}
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "invalid index name: 'bad/name'"
+    }
+  },
+  {
+    "build": {
+      "rules": {},
+      "indexes": {
+        "main": {
+          "rules": {}
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "duplicate index: main"
+    }
+  },
+  {
+    "build": {
+      "indexes": {
+        "x": {}
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "index x must have rules"
+    }
+  },
+  {
+    "build": {},
+    "expect": {
+      "error": "FormatError",
+      "message": "at least one index is required"
+    }
+  },
+  {
+    "build": {
+      "groups": {
+        "features": {}
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "groups requires rules"
+    }
+  },
+  {
+    "build": {
+      "rules": {},
+      "sections": {
+        "a b": 1
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "invalid section name: 'a b'"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "html": {
+            "value": "x"
+          }
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "html value requires attr"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "meta": [
+            "x"
+          ]
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "meta must be an object"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "js": {
+            "x": "y"
+          }
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "js must be a string or list of strings"
+    }
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "features": {
+            "x": "y"
+          }
+        }
+      },
+      "groups": {
+        "features": {
+          "kind": "map"
+        }
+      }
+    },
+    "expect": null
+  },
+  {
+    "build": {
+      "rules": {
+        "a": {
+          "features": ":v"
+        }
+      },
+      "groups": {
+        "features": {
+          "kind": "map"
+        }
+      }
+    },
+    "expect": {
+      "error": "FormatError",
+      "message": "features must be an object"
+    }
+  }
+]

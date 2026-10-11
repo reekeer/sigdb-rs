@@ -1,0 +1,10 @@
+{
+  "jquery-a": {"js": "jquery"},
+  "jquery-b": {"js": ["jQuery"]},
+  "express-a": {"headers": {"X-Powered-By": "Express"}},
+  "express-b": {"headers": {"x-powered-by": "express"}},
+  "apache": {"server": "apache"},
+  "tomcat": {"server": "apache-coyote"},
+  "multi-a": {"cdn": "cloudflare", "cms": "wordpress"},
+  "multi-b": {"cms": "WordPress", "cdn": "fastly"}
+}

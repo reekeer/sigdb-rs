@@ -1,0 +1,71 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Format
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Test
+        run: cargo test
+
+  crosscheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Checkout sigdb-ts
+        uses: actions/checkout@v5
+        with:
+          repository: reekeer/sigdb-ts
+          path: sigdb-ts
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install the Python package
+        run: pip install "sigdb==3.0.0"
+
+      - name: Python fixtures are current
+        run: python scripts/py_fixtures.py --check
+
+      - name: Python builds, Rust rebuilds and answers
+        run: |
+          python scripts/crosscheck.py "$RUNNER_TEMP/cross" --cases 1000 --seed "$GITHUB_RUN_NUMBER"
+          cargo run --release --example crosscheck -- "$RUNNER_TEMP/cross"
+
+      - name: sigdb-ts reads both files, Rust reads sigdb-ts files
+        run: |
+          python scripts/crosscheck.py "$RUNNER_TEMP/cross-ts" --cases 1000 --seed "$GITHUB_RUN_NUMBER" --no-new-unicode
+          cargo run --release --example crosscheck -- "$RUNNER_TEMP/cross-ts"
+          SIGDB_TS=sigdb-ts bun scripts/crosscheck-ts.ts "$RUNNER_TEMP/cross-ts"
+          cargo run --release --example crosscheck -- "$RUNNER_TEMP/cross-ts"

@@ -1,0 +1,293 @@
+[
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "apache/2.4",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "10",
+      "head": "apache/2.4",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "10",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "　apache",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "10",
+      "head": "apache",
+      "pattern_id": 0,
+      "all": [
+        [
+          0,
+          "10",
+          1,
+          [
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "straße",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "straße",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "strasse",
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "2",
+      "head": "strasse",
+      "pattern_id": 2,
+      "all": [
+        [
+          1,
+          "2",
+          1,
+          [
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "σας",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "sigma",
+      "head": "σας",
+      "pattern_id": 5,
+      "all": [
+        [
+          2,
+          "sigma",
+          1,
+          [
+            5
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "ΣΑΣ x",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "sigma",
+      "head": "σας x",
+      "pattern_id": 5,
+      "all": [
+        [
+          2,
+          "sigma",
+          1,
+          [
+            5
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cdn",
+    "value": "cloudflare",
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "2",
+      "head": "cloudflare",
+      "pattern_id": 4,
+      "all": [
+        [
+          1,
+          "2",
+          1,
+          [
+            4
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cms",
+    "value": "ghost",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "ghost",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "cms",
+    "value": "﻿ghost 5",
+    "expect": {
+      "result": true,
+      "item_id": 2,
+      "key": "sigma",
+      "head": "﻿ghost 5",
+      "pattern_id": 6,
+      "all": [
+        [
+          2,
+          "sigma",
+          1,
+          [
+            6
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "server",
+    "value": "CADDY 🚀 2",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "emoji",
+      "head": "caddy 🚀 2",
+      "pattern_id": 7,
+      "all": [
+        [
+          3,
+          "emoji",
+          1,
+          [
+            7
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "x-ünï: WERT",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "emoji",
+      "head": "x-ünï:wert",
+      "pattern_id": 8,
+      "all": [
+        [
+          3,
+          "emoji",
+          1,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "X-ÜNÏ:wert",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "emoji",
+      "head": "x-ünï:wert",
+      "pattern_id": 8,
+      "all": [
+        [
+          3,
+          "emoji",
+          1,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_tokens",
+    "group": "features",
+    "tokens": [
+      "istanbul",
+      "i̇stanbul",
+      "İstanbul",
+      "straße",
+      "STRASSE"
+    ],
+    "expect": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  {
+    "call": "items_with_prefix",
+    "prefix": "",
+    "expect": [
+      "10",
+      "2",
+      "emoji",
+      "sigma"
+    ]
+  },
+  {
+    "call": "item",
+    "key": "10",
+    "expect": [
+      0,
+      null
+    ]
+  },
+  {
+    "call": "item",
+    "key": "2",
+    "expect": [
+      1,
+      null
+    ]
+  }
+]

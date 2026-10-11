@@ -1,0 +1,604 @@
+[
+  {
+    "call": "match_group",
+    "group": "c",
+    "value": "abcd",
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "second",
+      "head": "abcd",
+      "pattern_id": 1,
+      "all": [
+        [
+          1,
+          "second",
+          2,
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          2,
+          "third",
+          1,
+          [
+            3
+          ]
+        ],
+        [
+          4,
+          "fifth",
+          1,
+          [
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "c",
+    "value": "xyzabcd",
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "first",
+      "head": "xyzabcd",
+      "pattern_id": 0,
+      "all": [
+        [
+          1,
+          "second",
+          2,
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          0,
+          "first",
+          1,
+          [
+            0
+          ]
+        ],
+        [
+          2,
+          "third",
+          1,
+          [
+            3
+          ]
+        ],
+        [
+          4,
+          "fifth",
+          1,
+          [
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "c",
+    "value": "zzcd",
+    "expect": {
+      "result": true,
+      "item_id": 1,
+      "key": "second",
+      "head": "zzcd",
+      "pattern_id": 2,
+      "all": [
+        [
+          1,
+          "second",
+          1,
+          [
+            2
+          ]
+        ],
+        [
+          4,
+          "fifth",
+          1,
+          [
+            2
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "c",
+    "value": "ABCD",
+    "expect": {
+      "result": false,
+      "item_id": null,
+      "key": null,
+      "head": "ABCD",
+      "pattern_id": null,
+      "all": []
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "abc",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "fourth",
+      "head": "abc",
+      "pattern_id": 6,
+      "all": [
+        [
+          3,
+          "fourth",
+          2,
+          [
+            4,
+            6
+          ]
+        ],
+        [
+          2,
+          "third",
+          1,
+          [
+            4
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "b",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "fourth",
+      "head": "b",
+      "pattern_id": 5,
+      "all": [
+        [
+          3,
+          "fourth",
+          1,
+          [
+            5
+          ]
+        ],
+        [
+          4,
+          "fifth",
+          1,
+          [
+            5
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "bab",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "fourth",
+      "head": "bab",
+      "pattern_id": 5,
+      "all": [
+        [
+          3,
+          "fourth",
+          1,
+          [
+            5
+          ]
+        ],
+        [
+          4,
+          "fifth",
+          1,
+          [
+            5
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "ab",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "fourth",
+      "head": "ab",
+      "pattern_id": 6,
+      "all": [
+        [
+          3,
+          "fourth",
+          2,
+          [
+            4,
+            6
+          ]
+        ],
+        [
+          2,
+          "third",
+          1,
+          [
+            4
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "a",
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "fourth",
+      "head": "a",
+      "pattern_id": 6,
+      "all": [
+        [
+          3,
+          "fourth",
+          1,
+          [
+            6
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "X-B: 2 X-A: 1",
+    "expect": {
+      "result": true,
+      "item_id": 5,
+      "key": "sixth",
+      "head": "x-b:2 x-a: 1",
+      "pattern_id": 8,
+      "all": [
+        [
+          5,
+          "sixth",
+          1,
+          [
+            8
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match",
+    "head": "x-a:1",
+    "expect": {
+      "result": true,
+      "item_id": 5,
+      "key": "sixth",
+      "head": "x-a:1",
+      "pattern_id": 7,
+      "all": [
+        [
+          5,
+          "sixth",
+          1,
+          [
+            7
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "js": [
+        "zzz",
+        "abx"
+      ],
+      "c": "xyz"
+    },
+    "expect": {
+      "result": true,
+      "item_id": 3,
+      "key": "fourth",
+      "head": "abx",
+      "pattern_id": 6
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "c": "xyz",
+      "js": "abx"
+    },
+    "expect": {
+      "result": true,
+      "item_id": 0,
+      "key": "first",
+      "head": "xyz",
+      "pattern_id": 0
+    }
+  },
+  {
+    "call": "match_search",
+    "search": {
+      "meta": {
+        "g": "v"
+      },
+      "headers": {
+        "X-A": "1"
+      }
+    },
+    "expect": {
+      "result": true,
+      "item_id": 5,
+      "key": "sixth",
+      "head": "g:v",
+      "pattern_id": 9
+    }
+  },
+  {
+    "call": "match_all",
+    "group": "c",
+    "values": [
+      "abcd",
+      "xyz"
+    ],
+    "expect": [
+      [
+        1,
+        "second",
+        2,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        0,
+        "first",
+        1,
+        [
+          0
+        ]
+      ],
+      [
+        2,
+        "third",
+        1,
+        [
+          3
+        ]
+      ],
+      [
+        4,
+        "fifth",
+        1,
+        [
+          2
+        ]
+      ]
+    ]
+  },
+  {
+    "call": "match_all",
+    "group": "js",
+    "values": [
+      "abc"
+    ],
+    "expect": [
+      [
+        3,
+        "fourth",
+        2,
+        [
+          4,
+          6
+        ]
+      ],
+      [
+        2,
+        "third",
+        1,
+        [
+          4
+        ]
+      ]
+    ]
+  },
+  {
+    "call": "match_tokens",
+    "group": "c",
+    "tokens": [
+      "abcd",
+      "cd",
+      "xyzcd"
+    ],
+    "expect": [
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        4,
+        1
+      ]
+    ]
+  },
+  {
+    "call": "scan",
+    "group": "c",
+    "text": "xyzabcdcd",
+    "expect": [
+      [
+        0,
+        0,
+        3,
+        "xyz"
+      ],
+      [
+        1,
+        4,
+        7,
+        "bcd"
+      ],
+      [
+        2,
+        5,
+        7,
+        "cd"
+      ],
+      [
+        3,
+        3,
+        7,
+        "abcd"
+      ],
+      [
+        2,
+        7,
+        9,
+        "cd"
+      ]
+    ]
+  },
+  {
+    "call": "scan",
+    "group": "js",
+    "text": "abab",
+    "expect": [
+      [
+        6,
+        0,
+        1,
+        "a"
+      ],
+      [
+        4,
+        0,
+        2,
+        "ab"
+      ],
+      [
+        5,
+        1,
+        2,
+        "b"
+      ],
+      [
+        6,
+        2,
+        3,
+        "a"
+      ],
+      [
+        4,
+        2,
+        4,
+        "ab"
+      ],
+      [
+        5,
+        3,
+        4,
+        "b"
+      ]
+    ]
+  },
+  {
+    "call": "pattern_count",
+    "item_id": 2,
+    "expect": 2
+  },
+  {
+    "call": "pattern_count",
+    "item_id": 4,
+    "group": "c",
+    "expect": 1
+  },
+  {
+    "call": "items_with_prefix",
+    "prefix": "f",
+    "expect": [
+      "fifth",
+      "first",
+      "fourth"
+    ]
+  },
+  {
+    "call": "match_group",
+    "group": "meta",
+    "value": "v2",
+    "name": "G",
+    "expect": {
+      "result": true,
+      "item_id": 5,
+      "key": "sixth",
+      "head": "g:v2",
+      "pattern_id": 9,
+      "all": [
+        [
+          5,
+          "sixth",
+          1,
+          [
+            9
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "meta",
+    "value": "v",
+    "expect": {
+      "error": "FormatError",
+      "message": "group meta requires a name"
+    }
+  },
+  {
+    "call": "match_group",
+    "group": "js",
+    "value": "x",
+    "name": "n",
+    "expect": {
+      "error": "FormatError",
+      "message": "group js does not accept a name"
+    }
+  }
+]
