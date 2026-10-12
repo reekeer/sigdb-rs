@@ -1,13 +1,11 @@
 use crate::error::{Error, Result};
 
-/// Decoded varint and the offset just past it.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct DecodeResult {
     pub value: u64,
     pub offset: usize,
 }
 
-/// LEB128 encoding of an unsigned integer.
 pub fn encode_varint(value: u64) -> Vec<u8> {
     let mut out = Vec::with_capacity(10);
     write_varint(&mut out, value);
@@ -27,10 +25,6 @@ pub(crate) fn write_varint(out: &mut Vec<u8>, mut n: u64) {
     }
 }
 
-/// Decodes a varint at `offset`, reading at most `max_bytes` bytes (10 in the Python package).
-///
-/// Values wider than 64 bits saturate to `u64::MAX`; Python keeps them exact, but every caller
-/// compares them against buffer sizes, so both reject them the same way.
 pub fn decode_varint(data: &[u8], offset: usize, max_bytes: usize) -> Result<DecodeResult> {
     let mut shift: u32 = 0;
     let mut result: u64 = 0;

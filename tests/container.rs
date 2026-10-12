@@ -1,5 +1,3 @@
-//! Container errors, ported from `tests/test_container_errors.py` and sigdb-ts.
-
 use sigdb::compression::compress_zstd;
 use sigdb::format::container::parse_container;
 use sigdb::{Error, LoadOptions, Value, build_bytes, load_bytes, load_bytes_with};

@@ -1,7 +1,3 @@
-//! Load and query timings on a real file.
-//!
-//!     cargo run --release --example bench -- <file.sigdb>
-
 use std::time::Instant;
 
 use sigdb::{LoadOptions, load_with};
@@ -41,8 +37,6 @@ fn main() {
         );
     }
 
-    // Aho-Corasick: 25k "contains" patterns taken from the file, scanned over 1 MB of text made
-    // of them (the same shape as the Python benchmark in the README).
     let patterns: Vec<&str> =
         (0..main.pattern_total()).step_by(6).take(25_000).map(|i| main.pattern_text(i).unwrap()).collect();
     let rules: sigdb::Value = patterns

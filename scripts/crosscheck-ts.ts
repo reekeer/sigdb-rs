@@ -1,9 +1,3 @@
-// Runs the vectors of scripts/crosscheck.py cases through sigdb-ts, on the file the Python package
-// built (py.sigdb) and on the one sigdb-rs built (rs.sigdb, written by examples/crosscheck.rs),
-// and builds the same rules with sigdb-ts into ts.sigdb for examples/crosscheck.rs to read.
-//
-//     SIGDB_TS=../sigdb-ts bun scripts/crosscheck-ts.ts <cases dir>
-
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -16,7 +10,8 @@ const { writeFileSync } = await import("node:fs");
 
 function same(a: unknown, b: unknown): boolean {
   if (typeof a === "bigint" || typeof b === "bigint") {
-    return String(a) === String(b);
+    const whole = (x: unknown) => (typeof x === "number" && Number.isInteger(x) ? BigInt(x) : x);
+    return String(whole(a)) === String(whole(b));
   }
   if (a === null || b === null || typeof a !== "object" || typeof b !== "object") {
     return a === b || (Number.isNaN(a) && Number.isNaN(b));
@@ -36,10 +31,16 @@ let vectors = 0;
 const failures: string[] = [];
 for (const name of readdirSync(dir).sort()) {
   const caseDir = join(dir, name);
-  if (!existsSync(join(caseDir, "rs.sigdb"))) continue;
+  if (!existsSync(join(caseDir, "vectors.json"))) continue;
+  const args = toBuildArgs(parseJsonBytes(readFileSync(join(caseDir, "build.json")), "map"));
+  const built: Uint8Array = buildBytes(args.rules, args.options);
+  const own = join(caseDir, "ts.sigdb");
+  if (!existsSync(own)) writeFileSync(own, built);
+  else if (Buffer.compare(Buffer.from(readFileSync(own)), Buffer.from(built)) !== 0) failures.push(`${name}: ts.sigdb differs from this build`);
   const list = parseJsonBytes(readFileSync(join(caseDir, "vectors.json")), "map") as Map<string, unknown>[];
   const expects = parseJsonBytes(readFileSync(join(caseDir, "vectors.json")), "object") as { expect: unknown }[];
-  for (const file of ["py.sigdb", "rs.sigdb"]) {
+  for (const file of ["py.sigdb", "rs.sigdb", "ts.sigdb"]) {
+    if (!existsSync(join(caseDir, file))) continue;
     const db = loadBytes(readFileSync(join(caseDir, file)));
     list.forEach((input, i) => {
       const actual = runVector(db, input);
@@ -49,8 +50,6 @@ for (const name of readdirSync(dir).sort()) {
     });
     vectors += list.length;
   }
-  const args = toBuildArgs(parseJsonBytes(readFileSync(join(caseDir, "build.json")), "map"));
-  writeFileSync(join(caseDir, "ts.sigdb"), buildBytes(args.rules, args.options));
   checked++;
 }
 console.log(`${checked} cases, ${vectors} vector runs`);

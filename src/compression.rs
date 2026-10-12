@@ -1,9 +1,6 @@
-//! zstd frames as the Python package writes and reads them (python-zstandard semantics).
-
 use crate::error::{Error, Result};
 use zstd_safe::{CCtx, CParameter, DCtx};
 
-/// Compresses `data` into one zstd frame with the content size in its header.
 pub fn compress_zstd(data: &[u8], level: i32) -> Result<Vec<u8>> {
     let fail =
         |code: usize| Error::format(format!("zstd compression failed: {}", zstd_safe::get_error_name(code)));
@@ -16,7 +13,6 @@ pub fn compress_zstd(data: &[u8], level: i32) -> Result<Vec<u8>> {
     Ok(out)
 }
 
-/// Decompresses the first zstd frame of `data`, which must hold exactly `expected_size` bytes.
 pub fn decompress_zstd(data: &[u8], expected_size: usize) -> Result<Vec<u8>> {
     let mismatch = || Error::format("zstd frame size does not match section size");
     let declared =

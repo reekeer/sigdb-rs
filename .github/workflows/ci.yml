@@ -2,70 +2,100 @@ name: ci
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
 
+env:
+  SIGDB_PY: "3.0.0"
+  SIGDB_TS_REF: 7e6ece6dd148d34e991e608d0f72228eef6b8995
+  CASES: "1000"
+  PYTHONHASHSEED: "0"
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
+  build:
+    name: build (${{ matrix.impl }})
+    runs-on: reekeer-linux
+    strategy:
+      fail-fast: false
+      matrix:
+        impl: [python, rust, ts]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+        with: {python-version: "3.13"}
+      - name: cases
+        run: |
+          py() { uv run --no-project --with "sigdb==$SIGDB_PY" python "$@"; }
+          py scripts/crosscheck.py cases/full --cases "$CASES" --seed "$GITHUB_RUN_NUMBER"
+          py scripts/crosscheck.py cases/portable --cases "$CASES" --seed "$GITHUB_RUN_NUMBER" --no-new-unicode
 
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: python
+        if: matrix.impl == 'python'
+        run: uv run --no-project --with "sigdb==$SIGDB_PY" python scripts/py_fixtures.py --check
+
+      - uses: dtolnay/rust-toolchain@stable
+        if: matrix.impl == 'rust'
+        with: {components: "rustfmt, clippy"}
+      - name: rust
+        if: matrix.impl == 'rust'
+        run: |
+          cargo fmt --check
+          cargo clippy --all-targets -- -D warnings
+          cargo test
+          cargo run --release --example crosscheck -- cases/full
+          cargo run --release --example crosscheck -- cases/portable
+
+      - uses: actions/checkout@v7
+        if: matrix.impl == 'ts'
+        with: {repository: reekeer/sigdb-ts, ref: "${{ env.SIGDB_TS_REF }}", path: sigdb-ts}
+      - uses: actions/setup-node@v7
+        if: matrix.impl == 'ts'
+        with: {node-version: 22}
+      - uses: oven-sh/setup-bun@v2
+        if: matrix.impl == 'ts'
+      - name: ts
+        if: matrix.impl == 'ts'
+        run: |
+          (cd sigdb-ts && npm ci && npm run typecheck && npm test)
+          SIGDB_TS=sigdb-ts bun scripts/crosscheck-ts.ts cases/portable
+
+      - name: keep this implementation's files
+        run: |
+          case "${{ matrix.impl }}" in
+            python) find cases -name rs.sigdb -o -name ts.sigdb | xargs -r rm ;;
+            rust) find cases -type f ! -name rs.sigdb -delete ;;
+            ts) find cases -type f ! -name ts.sigdb -delete ;;
+          esac
+      - uses: actions/upload-artifact@v4
         with:
-          components: rustfmt, clippy
+          name: cases-${{ matrix.impl }}
+          path: cases/
+          retention-days: 7
 
-      - name: Format
-        run: cargo fmt --check
-
-      - name: Clippy
-        run: cargo clippy --all-targets -- -D warnings
-
-      - name: Test
-        run: cargo test
-
-  crosscheck:
-    runs-on: ubuntu-latest
-
+  verify:
+    needs: build
+    runs-on: reekeer-linux
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Checkout sigdb-ts
-        uses: actions/checkout@v5
-        with:
-          repository: reekeer/sigdb-ts
-          path: sigdb-ts
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.13"
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-
-      - name: Install the Python package
-        run: pip install "sigdb==3.0.0"
-
-      - name: Python fixtures are current
-        run: python scripts/py_fixtures.py --check
-
-      - name: Python builds, Rust rebuilds and answers
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with: {repository: reekeer/sigdb-ts, ref: "${{ env.SIGDB_TS_REF }}", path: sigdb-ts}
+      - uses: actions/download-artifact@v4
+        with: {pattern: "cases-*", merge-multiple: true, path: cases}
+      - uses: astral-sh/setup-uv@v10.2.0
+        with: {python-version: "3.13"}
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-node@v7
+        with: {node-version: 22}
+      - uses: oven-sh/setup-bun@v2
+      - name: python reads the rust and ts files
         run: |
-          python scripts/crosscheck.py "$RUNNER_TEMP/cross" --cases 1000 --seed "$GITHUB_RUN_NUMBER"
-          cargo run --release --example crosscheck -- "$RUNNER_TEMP/cross"
-
-      - name: sigdb-ts reads both files, Rust reads sigdb-ts files
+          uv run --no-project --with "sigdb==$SIGDB_PY" python scripts/crosscheck.py --verify cases/full
+          uv run --no-project --with "sigdb==$SIGDB_PY" python scripts/crosscheck.py --verify cases/portable
+      - name: rust matches the python bytes and reads the python and ts files
         run: |
-          python scripts/crosscheck.py "$RUNNER_TEMP/cross-ts" --cases 1000 --seed "$GITHUB_RUN_NUMBER" --no-new-unicode
-          cargo run --release --example crosscheck -- "$RUNNER_TEMP/cross-ts"
-          SIGDB_TS=sigdb-ts bun scripts/crosscheck-ts.ts "$RUNNER_TEMP/cross-ts"
-          cargo run --release --example crosscheck -- "$RUNNER_TEMP/cross-ts"
+          cargo run --release --example crosscheck -- cases/full
+          cargo run --release --example crosscheck -- cases/portable
+      - name: ts reads the python and rust files
+        run: |
+          (cd sigdb-ts && npm ci)
+          SIGDB_TS=sigdb-ts bun scripts/crosscheck-ts.ts cases/portable

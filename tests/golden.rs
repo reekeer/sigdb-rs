@@ -1,6 +1,3 @@
-//! Golden vectors of the Python package (`tests/golden`) and of sigdb-ts (`tests/golden-extra`):
-//! reproducible builds, section digests, every query result and every build error.
-
 mod common;
 
 use common::*;

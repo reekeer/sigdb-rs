@@ -179,14 +179,21 @@ cargo run --release --example crosscheck -- /tmp/cross
 python scripts/crosscheck.py /tmp/cross-ts --cases 2000 --no-new-unicode
 cargo run --release --example crosscheck -- /tmp/cross-ts
 SIGDB_TS=../sigdb-ts bun scripts/crosscheck-ts.ts /tmp/cross-ts
+python scripts/crosscheck.py --verify /tmp/cross-ts
 cargo run --release --example crosscheck -- /tmp/cross-ts
 ```
 
-The first run requires the Rust build to be byte-identical to Python's, the same build errors,
-and Python's answer to every query on both files. The second also has sigdb-ts answer every
-query on the Python and Rust files, then Rust read the files sigdb-ts built. `--no-new-unicode`
-leaves out characters added after Unicode 15.1, which JavaScript engines lowercase where Python
-does not.
+Python generates the cases, its files (`py.sigdb`) and its answers to random queries. Rust has to
+build byte-identical files (`rs.sigdb`) and the same build errors; sigdb-ts builds `ts.sigdb`. Every
+implementation then answers every query on every file it did not build, and a file found next to
+a fresh build must equal it. `--no-new-unicode` leaves out characters added after Unicode 15.1,
+which JavaScript engines lowercase where Python does not. sigdb-ts writes whole floats as integers,
+so values are compared the way Python compares them (`1e22 == 10**22`).
+
+CI (`.github/workflows/ci.yml`, runner `reekeer-linux`) runs this as a matrix: `build (python)`,
+`build (rust)` and `build (ts)` each generate the same cases from the run number, run their own
+checks (Python fixtures; `cargo fmt`, `clippy`, `test`; sigdb-ts typecheck and tests) and upload
+their own files. `verify` merges the three uploads and runs the cross reads above.
 
 ## License
 

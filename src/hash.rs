@@ -1,6 +1,3 @@
-//! Fast non-cryptographic hashing (the Fx hash of rustc) for the lookup tables built from a
-//! database's own patterns.
-
 use std::hash::{BuildHasherDefault, Hasher};
 
 const SEED: u64 = 0x51_7c_c1_b7_27_22_0a_95;
@@ -54,7 +51,6 @@ impl Hasher for FxHasher {
 
     #[inline]
     fn finish(&self) -> u64 {
-        // Final avalanche so that the low bits hashbrown uses depend on every input bit.
         let mut h = self.hash;
         h ^= h >> 33;
         h = h.wrapping_mul(0xff51_afd7_ed55_8ccd);

@@ -1,8 +1,3 @@
-//! JSON reading and writing that matches Python's `json` module byte for byte:
-//! `json.loads` (with `NaN`/`Infinity`, encoding detection for bytes, last duplicate key wins in
-//! the position of the first) and `json.dumps(ensure_ascii=False, separators=(",", ":"),
-//! allow_nan=False)` (with `float.__repr__` for floats).
-
 use crate::value::{Map, Value};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -130,7 +125,6 @@ impl<'a> Parser<'a> {
 
     fn string(&mut self) -> Result<String> {
         let begin = self.pos;
-        // Fast path: no escapes before the closing quote.
         let rest = &self.s[begin..];
         if let Some(i) = rest.iter().position(|&b| b == b'"' || b == b'\\' || b < 0x20) {
             if rest[i] == b'"' {
@@ -268,9 +262,6 @@ impl<'a> Parser<'a> {
     }
 }
 
-/// Step-by-step access to the parser for payloads of a known shape. Every method answers
-/// `None`/`false` when the text does not continue the expected way; the caller then falls back to
-/// [`parse`], which decides what the text means (and how it is wrong).
 pub(crate) struct Scanner<'a>(Parser<'a>);
 
 impl<'a> Scanner<'a> {
@@ -297,8 +288,6 @@ impl<'a> Scanner<'a> {
         self.0.string().ok()
     }
 
-    /// A value nested `depth` containers deep, so that the nesting limit counts from the top of
-    /// the document as it does in [`parse`].
     pub fn value_at(&mut self, depth: usize) -> Option<Value> {
         self.0.ws();
         self.0.depth = depth;
@@ -307,7 +296,6 @@ impl<'a> Scanner<'a> {
         v
     }
 
-    /// A non-negative integer literal (not a float, no leading zeros).
     pub fn uint(&mut self) -> Option<u64> {
         self.0.ws();
         let start = self.0.pos;
@@ -347,7 +335,6 @@ fn int_value(text: &str) -> Value {
     }
 }
 
-/// `json.loads(text)`.
 pub fn parse(text: &str) -> Result<Value> {
     let mut p = Parser { s: text.as_bytes(), text, pos: 0, depth: 0 };
     p.ws();
@@ -359,7 +346,6 @@ pub fn parse(text: &str) -> Result<Value> {
     Ok(v)
 }
 
-/// `json.loads(data)` for `bytes`: detects UTF-8/16/32 like `json.detect_encoding`.
 pub fn parse_bytes(data: &[u8]) -> Result<Value> {
     let text = decode_bytes(data)?;
     parse(&text)
@@ -458,7 +444,6 @@ fn escape_into(out: &mut String, s: &str) {
     out.push('"');
 }
 
-/// `float.__repr__` for a finite float.
 pub fn float_repr(x: f64) -> String {
     if x == 0.0 {
         return if x.is_sign_negative() { "-0.0".into() } else { "0.0".into() };
@@ -484,7 +469,6 @@ pub fn float_repr(x: f64) -> String {
     format!("{sign}{}.{}", &digits[..int_len], &digits[int_len..])
 }
 
-/// `repr()` of a Python float, `inf` and `nan` included.
 pub fn float_py_repr(x: f64) -> String {
     if x.is_nan() {
         "nan".into()
@@ -538,14 +522,12 @@ fn dump_into(out: &mut String, v: &Value) -> Result<()> {
     Ok(())
 }
 
-/// `json.dumps(value, ensure_ascii=False, separators=(",", ":"), allow_nan=False)`.
 pub fn dump(v: &Value) -> Result<String> {
     let mut out = String::new();
     dump_into(&mut out, v)?;
     Ok(out)
 }
 
-/// Writer used for large payloads built without an intermediate [`Value`].
 pub(crate) struct Writer {
     pub out: String,
 }

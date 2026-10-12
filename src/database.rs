@@ -1,5 +1,3 @@
-//! A loaded `.sigdb` file: header metadata, indexes and data sections.
-
 use std::path::Path;
 use std::sync::{Arc, OnceLock};
 
@@ -14,14 +12,10 @@ use crate::index::{Index, Values};
 use crate::types::{Hit, Item, MatchResult, Occurrence, Section, ValidationResult};
 use crate::value::{Map, Value};
 
-/// How a file is loaded.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct LoadOptions {
-    /// Check the SHA-256 of every section when it is first read.
     pub verify_hash: bool,
-    /// Read sections on first use; `false` reads and checks everything while loading.
     pub lazy: bool,
-    /// Largest raw section size accepted.
     pub max_section_size: u64,
 }
 
@@ -31,8 +25,6 @@ impl Default for LoadOptions {
     }
 }
 
-/// A database. Indexes and sections are decoded on first use and kept; the type is `Send` and
-/// `Sync`, so one instance can serve many threads.
 pub struct Database {
     pub metadata: Map,
     store: Arc<Store>,
@@ -78,12 +70,10 @@ impl Database {
         Ok(Database { metadata, store: Arc::new(store), indexes, sections, section_order })
     }
 
-    /// Rebuilds a database from raw (uncompressed) sections, as `raw_sections` returns them.
     pub fn from_raw(metadata: Map, sections: IndexMap<String, Vec<u8>>) -> Result<Database> {
         Database::new(metadata, Store::Raw(RawSections { raw: sections }))
     }
 
-    /// Every section decompressed and verified.
     pub fn raw_sections(&self) -> Result<IndexMap<String, Vec<u8>>> {
         let mut out = IndexMap::new();
         for name in self.store.names() {
@@ -92,7 +82,6 @@ impl Database {
         Ok(out)
     }
 
-    /// SHA-256 (hex) of every raw section.
     pub fn section_digests(&self) -> IndexMap<String, String> {
         self.store.digests()
     }
@@ -101,12 +90,10 @@ impl Database {
         self.indexes.keys().map(String::as_str).collect()
     }
 
-    /// Names of the `json/` and `blob/` sections.
     pub fn section_names(&self) -> Vec<&str> {
         self.section_order.iter().map(String::as_str).collect()
     }
 
-    /// A data section: JSON for `json/<name>`, bytes for `blob/<name>`.
     pub fn section(&self, name: &str) -> Result<&Section> {
         let slot =
             self.sections.get(name).ok_or_else(|| Error::format(format!("missing section: {name}")))?;
@@ -122,7 +109,6 @@ impl Database {
         value.as_ref().map_err(Clone::clone)
     }
 
-    /// An index by name.
     pub fn index(&self, name: &str) -> Result<&Index> {
         let slot = self.indexes.get(name).ok_or_else(|| Error::format(format!("missing index: {name}")))?;
         let index = slot.get_or_init(|| {
@@ -141,7 +127,6 @@ impl Database {
         index.as_ref().map_err(Clone::clone)
     }
 
-    /// The `main` index.
     pub fn main(&self) -> Result<&Index> {
         self.index(DEFAULT_INDEX)
     }
@@ -205,7 +190,6 @@ impl Database {
     }
 }
 
-/// Loads a database from file bytes.
 pub fn load_bytes(data: impl Into<Vec<u8>>) -> Result<Database> {
     load_bytes_with(data, &LoadOptions::default())
 }
@@ -220,7 +204,6 @@ pub fn load_bytes_with(data: impl Into<Vec<u8>>, options: &LoadOptions) -> Resul
     Ok(db)
 }
 
-/// Loads a `.sigdb` file.
 pub fn load(path: impl AsRef<Path>) -> Result<Database> {
     load_with(path, &LoadOptions::default())
 }
@@ -234,7 +217,6 @@ pub(crate) fn read_file(path: &Path) -> Result<Vec<u8>> {
     std::fs::read(path).map_err(|e| io_error(&e, path))
 }
 
-/// An I/O error worded like Python's `OSError`: `[Errno 2] No such file or directory: 'x'`.
 pub(crate) fn io_error(e: &std::io::Error, path: &Path) -> Error {
     let text = e.to_string();
     let message = match e.raw_os_error() {
@@ -247,14 +229,12 @@ pub(crate) fn io_error(e: &std::io::Error, path: &Path) -> Error {
     Error::Io(e.kind(), message)
 }
 
-/// Reads the header of a file without reading its sections.
 pub fn read_metadata(path: impl AsRef<Path>) -> Result<Map> {
     let path = path.as_ref();
     let file = std::fs::File::open(path).map_err(|e| io_error(&e, path))?;
     crate::format::container::read_header(std::io::BufReader::new(file))
 }
 
-/// Loads and checks every section of a file; never fails, problems go to `errors`.
 pub fn validate(path: impl AsRef<Path>) -> ValidationResult {
     validate_with(path, true, DEFAULT_MAX_SECTION_SIZE)
 }

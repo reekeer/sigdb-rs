@@ -1,5 +1,3 @@
-//! Group configuration, value normalization and rule value parsing.
-
 use indexmap::IndexMap;
 
 use crate::error::{Error, Result};
@@ -35,7 +33,6 @@ const KINDS: [&str; 2] = ["list", "map"];
 const MODES: [&str; 3] = ["prefix", "contains", "exact"];
 const CONFIG_KEYS: [&str; 4] = ["kind", "match", "ignore_case", "trim"];
 
-/// `list` groups take strings, `map` groups take `{name: value}` and match `name:value`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum GroupKind {
     List,
@@ -51,7 +48,6 @@ impl GroupKind {
     }
 }
 
-/// How a value is compared with a pattern: starts with, contains or equals it.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum MatchMode {
     Prefix,
@@ -69,7 +65,6 @@ impl MatchMode {
     }
 }
 
-/// Resolved configuration of one group.
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct GroupSpec {
     pub name: String,
@@ -90,7 +85,6 @@ impl GroupSpec {
     }
 }
 
-/// Checks an index, group or section name: `[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}`.
 pub fn check_name<'a>(name: &'a str, what: &str) -> Result<&'a str> {
     let b = name.as_bytes();
     let first = |c: u8| c.is_ascii_alphanumeric() || c == b'_';
@@ -112,7 +106,6 @@ pub fn builtin_spec(name: &str) -> GroupSpec {
     }
 }
 
-/// Built-in groups overlaid with `config` (`{name: {kind, match, ignore_case, trim}}`).
 pub fn resolve_groups(config: Option<&Value>) -> Result<IndexMap<String, GroupSpec>> {
     let mut specs: IndexMap<String, GroupSpec> =
         BUILTIN_GROUPS.iter().map(|&n| (n.to_string(), builtin_spec(n))).collect();
@@ -187,7 +180,6 @@ pub fn spec_from_json(name: &str, raw: &Value) -> Result<GroupSpec> {
     Ok(GroupSpec { name: name.to_string(), kind, match_mode, ignore_case, trim })
 }
 
-/// Applies the group's `trim` and `ignore_case` to a value.
 pub fn normalize(spec: &GroupSpec, value: &str) -> String {
     let trimmed;
     let mut value = value;
@@ -257,7 +249,6 @@ pub fn parse_html_list(value: Option<&Value>) -> Result<Vec<String>> {
     }
 }
 
-/// The pattern texts a rule value contributes to a group (before normalization).
 pub fn parse_values(spec: &GroupSpec, value: Option<&Value>) -> Result<Vec<String>> {
     if spec.kind == GroupKind::Map {
         let pairs = parse_string_map(value, &spec.name)?;

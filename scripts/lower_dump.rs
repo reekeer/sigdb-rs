@@ -1,6 +1,3 @@
-// Dumps char::to_lowercase for every code point; input of scripts/gen_tables.py.
-//     rustc -O scripts/lower_dump.rs -o /tmp/lower_dump && (cd /tmp && ./lower_dump)
-
 fn main() {
     let mut out = String::new();
     for cp in 0u32..=0x10FFFF {

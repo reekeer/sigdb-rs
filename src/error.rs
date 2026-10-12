@@ -1,9 +1,5 @@
 use std::fmt;
 
-/// Error raised by sigdb.
-///
-/// `Format` and `Integrity` mirror `sigdb.FormatError` and `sigdb.IntegrityError` of the Python
-/// package, with the same messages. `Io` covers what Python reports as `OSError`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Error {
     Format(String),
@@ -22,7 +18,6 @@ impl Error {
         Error::Integrity(message.into())
     }
 
-    /// Class name of the matching Python exception: `FormatError`, `IntegrityError` or `OSError`.
     pub fn kind_name(&self) -> &'static str {
         match self {
             Error::Format(_) => "FormatError",

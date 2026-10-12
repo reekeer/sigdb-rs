@@ -1,13 +1,8 @@
-//! Byte-level Aho-Corasick automaton, its varint serialization and the two searches sigdb runs
-//! on it: every occurrence (`contains`) and patterns anchored at the start (`prefix`).
-
 use crate::error::{Error, Result};
 use crate::utils::varint::{decode_varint, write_varint};
 
 const NONE: u32 = u32::MAX;
 
-/// The binary search of the Python package, kept step for step so that even a crafted file with
-/// unsorted labels resolves the same edge.
 #[inline]
 fn search(labels: &[u8], b: u8) -> Option<usize> {
     let (mut lo, mut hi) = (0usize, labels.len());
@@ -25,8 +20,6 @@ fn search(labels: &[u8], b: u8) -> Option<usize> {
     None
 }
 
-/// A compiled automaton in the flat layout it is stored in: per state a sorted run of edges and a
-/// run of output pattern ids.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Automaton {
     pub children_start: Vec<u32>,
@@ -61,7 +54,6 @@ impl Automaton {
         self.children_start.len()
     }
 
-    /// Next state on byte `b`, or `None` without an edge.
     #[inline]
     pub fn transition(&self, state: u32, b: u8) -> Option<u32> {
         if state == 0 {
@@ -81,7 +73,6 @@ impl Automaton {
         &self.outputs[start..start + self.out_count[s] as usize]
     }
 
-    /// Every match as `(end, pattern_id)`, `end` being the byte offset just past it.
     pub fn find_contains(&self, data: &[u8]) -> Vec<(usize, u32)> {
         let mut found = Vec::new();
         self.for_each_contains(data, |end, pid| found.push((end, pid)));
@@ -109,8 +100,6 @@ impl Automaton {
         }
     }
 
-    /// Patterns that are a prefix of `data` as `(length, pattern_id)`; `lengths` holds the byte
-    /// length of every pattern id.
     pub fn find_prefix(&self, data: &[u8], lengths: &[usize]) -> Vec<(usize, u32)> {
         let mut found = Vec::new();
         let mut state = 0u32;
@@ -132,8 +121,6 @@ impl Automaton {
     }
 }
 
-/// Builds the automaton for `(pattern bytes, pattern id)` pairs, numbering states in insertion
-/// order exactly as the Python package does.
 pub fn build_automaton<P: AsRef<[u8]>>(patterns: &[(P, u32)]) -> Automaton {
     let mut trans: Vec<Vec<(u8, u32)>> = vec![Vec::new()];
     let mut out: Vec<Vec<u32>> = vec![Vec::new()];
@@ -327,8 +314,6 @@ pub fn deserialize_automaton(data: &[u8], pattern_count: usize) -> Result<Automa
     Ok(automaton)
 }
 
-/// Rejects fail links that do not lead to a shallower state, which would make a search loop
-/// forever (the Python package does not check this; sigdb-ts does, with the same message).
 fn check_fail_links(a: &Automaton) -> Result<()> {
     let n = a.node_count();
     let mut depth = vec![-1i64; n];

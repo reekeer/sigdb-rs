@@ -1,5 +1,3 @@
-//! One index of a database: items, patterns and the per-group lookups built on first use.
-
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex, OnceLock};
 
@@ -18,12 +16,8 @@ use crate::text::lower;
 use crate::types::{Hit, Item, MatchResult, Occurrence, Pattern};
 use crate::value::Value;
 
-/// Loads the automaton of a group: `(group, pattern count) -> automaton`, `None` when the group
-/// has no automaton section.
 pub type AutomatonLoader = Box<dyn Fn(&str, usize) -> Result<Option<Automaton>> + Send + Sync>;
 
-/// Values for `match_all` and `match_tokens`: one string, a list, `{name: value}` pairs for map
-/// groups, or any JSON value with the Python package's rules.
 #[derive(Debug, Clone)]
 pub enum Values<'a> {
     One(&'a str),
@@ -86,7 +80,6 @@ impl<'a> From<&'a Value> for Values<'a> {
     }
 }
 
-/// An index: items, patterns, and lazily built exact-match tables and automata.
 pub struct Index {
     pub name: String,
     pub groups: IndexMap<String, GroupSpec>,
@@ -119,7 +112,6 @@ fn err(name: &str, msg: &str) -> Error {
     Error::format(format!("index {name}: {msg}"))
 }
 
-/// The validated content of an index payload.
 struct Parts {
     groups: IndexMap<String, GroupSpec>,
     items: Vec<Item>,
@@ -144,10 +136,6 @@ impl Parts {
     }
 }
 
-/// Reads a payload in the exact shape the compiler writes — `{"groups":…,"items":…,"patterns":…,
-/// "pattern_items":…}` with valid content — straight into the index structures. Anything else
-/// returns `None` and goes through [`parse_payload`], which gives the same result for this shape
-/// and the right error for any other.
 fn parse_canonical(raw: &[u8]) -> Option<Parts> {
     use crate::json::Scanner;
     if raw.first() != Some(&b'{') {
@@ -257,7 +245,6 @@ fn parse_canonical(raw: &[u8]) -> Option<Parts> {
     Some(parts)
 }
 
-/// Validates a parsed payload with the checks and messages of the Python package.
 fn parse_payload(name: &str, payload: Value) -> Result<Parts> {
     let Value::Object(mut data) = payload else {
         return Err(err(name, "payload must be an object"));
@@ -341,12 +328,10 @@ fn parse_payload(name: &str, payload: Value) -> Result<Parts> {
 }
 
 impl Index {
-    /// Builds an index from its parsed `index/<name>` payload.
     pub fn new(name: &str, payload: Value, loader: AutomatonLoader) -> Result<Index> {
         Ok(Index::from_parts(name, parse_payload(name, payload)?, loader))
     }
 
-    /// Builds an index from the raw bytes of its `index/<name>` section.
     pub fn from_json(name: &str, raw: &[u8], loader: AutomatonLoader) -> Result<Index> {
         if let Some(parts) = parse_canonical(raw) {
             return Ok(Index::from_parts(name, parts, loader));
@@ -387,7 +372,6 @@ impl Index {
         self.groups.get_index(self.pattern_group[pid] as usize).map_or("", |(g, _)| g.as_str())
     }
 
-    /// Text, group and owning items of a pattern.
     pub fn pattern(&self, pattern_id: usize) -> Option<Pattern> {
         (pattern_id < self.pattern_text.len()).then(|| Pattern {
             id: pattern_id,
@@ -397,17 +381,14 @@ impl Index {
         })
     }
 
-    /// Text of a pattern without copying it.
     pub fn pattern_text(&self, pattern_id: usize) -> Option<&str> {
         self.pattern_text.get(pattern_id).map(String::as_str)
     }
 
-    /// Group of a pattern without copying it.
     pub fn pattern_group(&self, pattern_id: usize) -> Option<&str> {
         (pattern_id < self.pattern_text.len()).then(|| self.group_name(pattern_id))
     }
 
-    /// Items that own a pattern.
     pub fn pattern_items(&self, pattern_id: usize) -> Option<impl Iterator<Item = usize> + '_> {
         (pattern_id < self.pattern_text.len()).then(|| self.items_of(pattern_id).iter().map(|&i| i as usize))
     }
@@ -423,7 +404,6 @@ impl Index {
         ids.get(key).copied()
     }
 
-    /// Items whose key starts with `prefix`, in key order.
     pub fn items_with_prefix(&self, prefix: &str) -> Vec<&Item> {
         let keys = self.sorted_keys.get_or_init(|| {
             let mut ids: Vec<usize> = (0..self.items.len()).collect();
@@ -438,8 +418,6 @@ impl Index {
             .collect()
     }
 
-    /// Number of patterns of an item, in one group or (`None`) in all of them. `None` when the
-    /// item id is out of range.
     pub fn pattern_count(&self, item_id: usize, group: Option<&str>) -> Option<usize> {
         let key = group.map(str::to_string);
         let counts = {
@@ -462,7 +440,6 @@ impl Index {
         counts.get(item_id).copied()
     }
 
-    /// Builds every lookup now instead of on first use.
     pub fn preload(&self) -> Result<()> {
         for (gi, spec) in self.groups.values().enumerate() {
             if spec.match_mode == MatchMode::Exact {
@@ -506,7 +483,6 @@ impl Index {
                 if self.pattern_group[pid] as usize != gi {
                     continue;
                 }
-                // A later pattern with the same text replaces an earlier one, as in a dict.
                 let h = hash_str(text);
                 match table.entry(h, |&p| texts[p as usize] == *text, |&p| hash_str(&texts[p as usize])) {
                     hashbrown::hash_table::Entry::Occupied(mut e) => *e.get_mut() = pid as u32,
@@ -603,25 +579,21 @@ impl Index {
         Ok(raw.iter().map(|v| normalize(spec, v)).collect())
     }
 
-    /// First match of a header line (`Name: value`) in the `headers` group.
     pub fn r#match(&self, head: &str) -> Result<MatchResult<'_>> {
         let spec = self.spec("headers")?;
         self.first(spec, normalize(spec, head))
     }
 
-    /// Alias of `r#match`.
     pub fn match_head(&self, head: &str) -> Result<MatchResult<'_>> {
         self.r#match(head)
     }
 
-    /// First match of one value in a group; map groups take the name separately.
     pub fn match_group(&self, group: &str, value: &str, name: Option<&str>) -> Result<MatchResult<'_>> {
         let spec = self.spec(group)?;
         let head = self.heads_one(spec, value, name)?;
         self.first(spec, head)
     }
 
-    /// First match of a search object `{group: values}`, trying groups and values in order.
     pub fn match_search(&self, search: &Value) -> Result<MatchResult<'_>> {
         let Value::Object(search) = search else {
             return Err(Error::format("search must be an object"));
@@ -638,7 +610,6 @@ impl Index {
         Ok(MatchResult::none(""))
     }
 
-    /// First match of the tags and attributes of an HTML document in the `html` group.
     pub fn match_html(&self, html: &str) -> Result<MatchResult<'_>> {
         let spec = self.spec("html")?;
         for head in html_heads(html) {
@@ -650,7 +621,6 @@ impl Index {
         Ok(MatchResult::none(""))
     }
 
-    /// Every item with at least one matching pattern, by number of distinct patterns hit.
     pub fn match_all<'v>(&self, group: &str, values: impl Into<Values<'v>>) -> Result<Vec<Hit<'_>>> {
         let spec = self.spec(group)?;
         let heads = self.heads(spec, &values.into())?;
@@ -661,7 +631,6 @@ impl Index {
         self.hits_for(pattern_ids)
     }
 
-    /// `{item_id: distinct patterns hit}` for a list of tokens, in `match_all` order.
     pub fn match_tokens<'v>(
         &self,
         group: &str,
@@ -700,8 +669,6 @@ impl Index {
         Ok(hits.into_iter().collect())
     }
 
-    /// Every occurrence of the group's patterns in `text` (lowercased first when the group
-    /// ignores case), with UTF-8 byte offsets.
     pub fn scan(&self, text: &str, group: &str) -> Result<Vec<Occurrence>> {
         let spec = self.spec(group)?;
         if spec.match_mode == MatchMode::Exact {
@@ -726,7 +693,6 @@ impl Index {
         Ok(out)
     }
 
-    /// Groups pattern ids by item, ordered by hit count, then item id.
     pub fn hits_for(&self, pattern_ids: impl IntoIterator<Item = usize>) -> Result<Vec<Hit<'_>>> {
         let mut pids: Vec<usize> = pattern_ids.into_iter().collect();
         pids.sort_unstable();
@@ -782,7 +748,6 @@ mod tests {
         let slow = Index::new("main", crate::json::parse_bytes(raw).unwrap(), none()).unwrap();
         same(&fast, &slow);
 
-        // Other spellings of the same payload take the generic path and give the same index.
         let pretty = crate::json::parse_bytes(raw).unwrap();
         let mut spaced = String::from(" ");
         spaced.push_str(&pretty.to_json().unwrap().replace(",", ", ").replace(":[", ": ["));

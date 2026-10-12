@@ -1,11 +1,3 @@
-//! The `SIGT` v3 container: header JSON, section table and zstd section bodies.
-//!
-//! ```text
-//! "SIGT" | u8 version = 3 | u32 header length | header JSON
-//!        | u16 section count | per section: u8 name length, name, u32 raw size,
-//!          u32 stored size, SHA256(raw) | zstd section bodies
-//! ```
-
 use std::borrow::Cow;
 use std::io::Read;
 use std::ops::Range;
@@ -47,14 +39,12 @@ pub fn check_version(version: u8) -> Result<()> {
     Ok(())
 }
 
-/// Serializes `value` as section JSON (`json.dumps` with compact separators, UTF-8).
 pub fn dump_json(value: &Value) -> Result<Vec<u8>> {
     json::dump(value)
         .map(String::into_bytes)
         .map_err(|e| Error::format(format!("value is not serializable as JSON: {}", e.0)))
 }
 
-/// Parses section JSON; any decoding problem is `invalid {what} json`.
 pub fn parse_json(data: &[u8], what: &str) -> Result<Value> {
     json::parse_bytes(data).map_err(|_| Error::format(format!("invalid {what} json")))
 }
@@ -66,8 +56,6 @@ fn parse_header(raw: &[u8]) -> Result<Map> {
     }
 }
 
-/// Compresses each section on its own worker thread; frames do not depend on each other, so
-/// the output is the same as compressing them one after another.
 fn compress_all(sections: &[(String, Vec<u8>)], level: i32) -> Vec<Result<Vec<u8>>> {
     let total: usize = sections.iter().map(|(_, raw)| raw.len()).sum();
     let workers = std::thread::available_parallelism().map_or(1, |n| n.get()).min(sections.len());
@@ -101,7 +89,6 @@ fn compress_all(sections: &[(String, Vec<u8>)], level: i32) -> Vec<Result<Vec<u8
     out.into_iter().map(|r| r.expect("every section compressed")).collect()
 }
 
-/// Writes a container. Returns the file bytes and the SHA-256 (hex) of every raw section.
 pub fn write_container(
     header: &Map,
     sections: &[(String, Vec<u8>)],
@@ -157,7 +144,6 @@ pub fn write_container(
     Ok((out, hashes))
 }
 
-/// One entry of the section table.
 #[derive(Debug, Clone)]
 pub struct SectionEntry {
     pub name: String,
@@ -166,7 +152,6 @@ pub struct SectionEntry {
     body: Range<usize>,
 }
 
-/// A parsed container. Sections are decompressed and hash-checked when read.
 #[derive(Debug)]
 pub struct Container {
     pub header: Map,
@@ -185,7 +170,6 @@ impl Container {
         self.entries.get(name)
     }
 
-    /// SHA-256 (hex) of every raw section, from the section table.
     pub fn digests(&self) -> IndexMap<String, String> {
         self.entries.iter().map(|(n, e)| (n.clone(), hex(&e.digest))).collect()
     }
@@ -194,12 +178,10 @@ impl Container {
         self.entries.contains_key(name)
     }
 
-    /// Stored (compressed) bytes of a section.
     pub fn body(&self, name: &str) -> Option<&[u8]> {
         self.entries.get(name).map(|e| &self.data[e.body.clone()])
     }
 
-    /// Decompressed, verified bytes of a section.
     pub fn raw(&self, name: &str) -> Result<Vec<u8>> {
         let entry =
             self.entries.get(name).ok_or_else(|| Error::format(format!("missing section: {name}")))?;
@@ -257,7 +239,6 @@ fn read_header_from(c: &mut Cursor<'_>) -> Result<Map> {
     parse_header(c.take(header_len)?)
 }
 
-/// Parses a container. Section bodies are only located, not decompressed.
 pub fn parse_container(data: Vec<u8>, verify_hash: bool, max_section_size: u64) -> Result<Container> {
     let mut c = Cursor { data: &data, pos: 0 };
     let header = read_header_from(&mut c)?;
@@ -292,7 +273,6 @@ pub fn parse_container(data: Vec<u8>, verify_hash: bool, max_section_size: u64) 
     Ok(Container { header, data, entries, verify_hash, max_section_size })
 }
 
-/// Reads only the header of a container.
 pub fn read_header(mut r: impl Read) -> Result<Map> {
     fn exact(r: &mut impl Read, n: usize) -> Result<Vec<u8>> {
         let mut buf = Vec::with_capacity(n);
@@ -319,13 +299,11 @@ pub fn read_header_file(path: impl AsRef<Path>) -> Result<Map> {
     read_header(std::io::BufReader::new(f))
 }
 
-/// Raw section bytes held in memory, as `Database::from_raw` takes them.
 #[derive(Debug, Default)]
 pub(crate) struct RawSections {
     pub raw: IndexMap<String, Vec<u8>>,
 }
 
-/// Where a database reads its sections from.
 #[derive(Debug)]
 pub(crate) enum Store {
     Container(Container),

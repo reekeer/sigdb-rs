@@ -1,13 +1,3 @@
-"""Generate random build cases with the Python package for examples/crosscheck.rs.
-
-    python scripts/crosscheck.py <out dir> [--cases N] [--seed S] [--no-new-unicode]
-
-Each case gets build.json (rules, groups, indexes, sections, metadata, timestamp), and either
-error.json (the error Python raised) or py.sigdb plus vectors.json (queries with Python's answers).
-Inputs lean on what tends to break ports: Unicode case and whitespace rules, new code points, map
-groups, HTML heads, float formatting, big integers and key order.
-"""
-
 from __future__ import annotations
 
 import json
@@ -303,10 +293,36 @@ def to_file(value: Any) -> Any:
     return value
 
 
+def verify(out: Path) -> None:
+    failures: list[str] = []
+    runs = 0
+    for case in sorted(p for p in out.iterdir() if p.is_dir()):
+        if not (case / "vectors.json").is_file():
+            continue
+        vectors = json.loads((case / "vectors.json").read_text(encoding="utf-8"))
+        for name in ("rs.sigdb", "ts.sigdb"):
+            path = case / name
+            if not path.is_file():
+                continue
+            db = load_bytes(path.read_bytes())
+            for i, v in enumerate(vectors):
+                query = {k: x for k, x in v.items() if k != "expect"}
+                actual = json.loads(json.dumps(run(db, query), ensure_ascii=False))
+                runs += 1
+                if actual != v["expect"]:
+                    failures.append(f"{case.name}/{name}[{i}] {json.dumps(query, ensure_ascii=False)[:200]}\n  expected {json.dumps(v['expect'], ensure_ascii=False)[:200]}\n  actual   {json.dumps(actual, ensure_ascii=False)[:200]}")
+    print(f"{runs} vector runs on rs.sigdb and ts.sigdb")
+    if failures:
+        print("\n".join(failures[:30]), file=sys.stderr)
+        sys.exit(f"{len(failures)} mismatches")
+    print("all identical")
+
+
 def main(argv: list[str]) -> None:
+    if argv and argv[0] == "--verify":
+        verify(Path(argv[1]))
+        return
     if "--no-new-unicode" in argv:
-        # Code points added after Unicode 15.1 lower differently in JavaScript engines, which
-        # follow a newer Unicode version than Python; leave them out when checking sigdb-ts.
         WORDS[:] = [w for w in WORDS if not any(unicodedata.category(c) == "Cn" for c in w)]
     out = Path(argv[0])
     count = int(argv[argv.index("--cases") + 1]) if "--cases" in argv else 500

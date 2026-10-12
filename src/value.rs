@@ -1,12 +1,7 @@
-//! JSON value with the data model of Python's `json` module: object keys keep their order,
-//! integers of any size stay exact and `1` is distinct from `1.0`.
-
 use std::ops::{Deref, DerefMut};
 
 use indexmap::IndexMap;
 
-/// JSON object: keys in insertion order, like a Python `dict`. Derefs to an [`IndexMap`]; it is
-/// boxed so that a [`Value`] stays 32 bytes.
 #[derive(Clone, Default, PartialEq)]
 pub struct Map(Box<IndexMap<String, Value>>);
 
@@ -89,15 +84,12 @@ impl<'a> IntoIterator for &'a mut Map {
     }
 }
 
-/// A JSON value as Python's `json.loads` produces it.
 #[derive(Debug, Clone, PartialEq, Default)]
 pub enum Value {
     #[default]
     Null,
     Bool(bool),
-    /// An integer that fits `i64`.
     Int(i64),
-    /// An integer outside the `i64` range, as canonical decimal text (`-?[1-9][0-9]*`).
     BigInt(String),
     Float(f64),
     String(String),
@@ -161,17 +153,14 @@ impl Value {
         }
     }
 
-    /// `value[key]` for objects, `None` for a missing key or a non-object.
     pub fn get(&self, key: &str) -> Option<&Value> {
         self.as_object().and_then(|m| m.get(key))
     }
 
-    /// Serializes like `json.dumps(value, ensure_ascii=False, separators=(",", ":"))`.
     pub fn to_json(&self) -> crate::Result<String> {
         crate::json::dump(self).map_err(|e| crate::Error::format(e.0))
     }
 
-    /// Parses JSON text like `json.loads`.
     pub fn from_json(text: &str) -> crate::Result<Value> {
         crate::json::parse(text).map_err(|e| crate::Error::format(format!("invalid json: {}", e.0)))
     }
@@ -459,7 +448,6 @@ static NULL: Value = Value::Null;
 impl std::ops::Index<&str> for Value {
     type Output = Value;
 
-    /// `value[key]`; `Null` for a missing key or a non-object, like `serde_json`.
     fn index(&self, key: &str) -> &Value {
         self.get(key).unwrap_or(&NULL)
     }
@@ -468,14 +456,12 @@ impl std::ops::Index<&str> for Value {
 impl std::ops::Index<usize> for Value {
     type Output = Value;
 
-    /// `value[i]`; `Null` when out of range or not an array.
     fn index(&self, i: usize) -> &Value {
         self.as_array().and_then(|a| a.get(i)).unwrap_or(&NULL)
     }
 }
 
 impl std::fmt::Display for Value {
-    /// The compact JSON text; non-finite floats print as Python's `repr` would.
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match crate::json::dump(self) {
             Ok(s) => f.write_str(&s),

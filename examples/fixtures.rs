@@ -1,8 +1,3 @@
-//! Writes the Rust build of every golden case (`tests/golden`, `tests/golden-extra`) to a
-//! directory, as cross-implementation fixtures for the Python package and sigdb-ts.
-//!
-//!     cargo run --example fixtures -- <out dir>
-
 #[path = "../tests/common/mod.rs"]
 mod common;
 

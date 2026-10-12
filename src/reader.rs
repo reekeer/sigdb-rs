@@ -1,5 +1,3 @@
-//! A file path with a database loaded on first use.
-
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
@@ -13,7 +11,6 @@ use crate::index::{Index, Values};
 use crate::types::{Hit, Item, MatchResult, Occurrence, Section, ValidationResult};
 use crate::value::{Map, Value};
 
-/// Reads a `.sigdb` file lazily: the header on demand, the database on first query.
 #[derive(Debug)]
 pub struct Reader {
     path: PathBuf,
@@ -42,12 +39,10 @@ impl Reader {
         validate_with(&self.path, self.verify_hash, DEFAULT_MAX_SECTION_SIZE)
     }
 
-    /// Loads a fresh database.
     pub fn load(&self) -> Result<Database> {
         load_with(&self.path, &LoadOptions { verify_hash: self.verify_hash, ..LoadOptions::default() })
     }
 
-    /// The database, loaded once.
     pub fn database(&self) -> Result<&Database> {
         if let Some(db) = self.db.get() {
             return Ok(db);

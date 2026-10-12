@@ -1,19 +1,8 @@
-//! Tag and attribute heads of an HTML document, matched the way the Python package's regular
-//! expressions match them:
-//!
-//! ```text
-//! tag:  <\s*([a-zA-Z][\w:-]*)\b([^<>]*)>                          (re.IGNORECASE)
-//! attr: ([a-zA-Z_:][\w:.-]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?
-//! ```
-//!
-//! `\w`, `\s` and `\b` follow Python's Unicode definitions (see [`crate::text`]).
-
 use std::collections::HashSet;
 
 use crate::text::{is_space, is_word, strip};
 
 fn tag_first(c: char) -> bool {
-    // [a-zA-Z] under re.IGNORECASE also matches the characters that case-fold into it.
     c.is_ascii_alphabetic() || matches!(c, '\u{130}' | '\u{131}' | '\u{17f}' | '\u{212a}')
 }
 
@@ -35,7 +24,6 @@ fn unquoted_char(c: char) -> bool {
 
 type Attrs = Vec<(String, Option<String>)>;
 
-/// `(tag, [(attr, value)])` for every tag the tag expression finds.
 fn tags(html: &[char]) -> Vec<(String, Attrs)> {
     let mut out = Vec::new();
     let n = html.len();
@@ -57,8 +45,6 @@ fn tags(html: &[char]) -> Vec<(String, Attrs)> {
         while m < n && tag_char(html[m]) {
             m += 1;
         }
-        // \b after the name: back off to just past its last word character. html[j] is one,
-        // so the name never shrinks below a single character.
         let mut p = m;
         while p > j + 1 && !is_word(html[p - 1]) {
             p -= 1;
@@ -100,7 +86,6 @@ fn attrs(s: &[char]) -> Attrs {
     out
 }
 
-/// The optional `\s*=\s*(...)` part at `at`: the raw value and where the match ends.
 fn attr_value(s: &[char], at: usize) -> (Option<String>, usize) {
     let n = s.len();
     let mut k = at;
@@ -134,8 +119,6 @@ fn attr_value(s: &[char], at: usize) -> (Option<String>, usize) {
     (Some(s[start..k].iter().collect()), k)
 }
 
-/// Every head of `html` in document order without repeats: `tag:T`, `tag:T:attr:A`,
-/// `tag:T:attr:A:value:V`, `attr:A`, `attr:A:value:V`.
 pub fn html_heads(html: &str) -> Vec<String> {
     let chars: Vec<char> = html.chars().collect();
     let mut heads = Vec::new();

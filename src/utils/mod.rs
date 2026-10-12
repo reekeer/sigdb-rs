@@ -1,5 +1,3 @@
-//! Small helpers shared by the format code.
-
 pub mod hashing;
 pub mod varint;
 

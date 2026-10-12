@@ -1,5 +1,3 @@
-//! The on-disk format: the container and the automaton blocks inside it.
-
 pub mod automaton;
 pub mod container;
 

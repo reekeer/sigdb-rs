@@ -1,5 +1,3 @@
-//! Rules to `.sigdb`: per-index JSON payloads, per-group automata, data sections, container.
-
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
@@ -37,18 +35,12 @@ pub fn blob_section(name: &str) -> String {
     format!("blob/{name}")
 }
 
-/// Options of [`build`] and [`build_bytes`], the keyword arguments of the Python functions.
 #[derive(Debug, Clone)]
 pub struct BuildOptions {
-    /// Group configuration of the `main` index: `{name: {kind, match, ignore_case, trim}}`.
     pub groups: Option<Value>,
-    /// More indexes: `{name: {"rules": ..., "groups": ...}}`.
     pub indexes: Option<Value>,
-    /// Named data sections: JSON values or bytes.
     pub sections: IndexMap<String, Section>,
-    /// Header fields; `format` defaults to `SIGDB`.
     pub metadata: Option<Value>,
-    /// Adds `created` and `build` (UTC date) to the header. Builds without it are reproducible.
     pub timestamp: Option<i64>,
     pub zstd_level: i32,
 }
@@ -71,13 +63,11 @@ impl BuildOptions {
         Self::default()
     }
 
-    /// Sets the whole group configuration of the `main` index.
     pub fn groups(mut self, groups: impl Into<Value>) -> Self {
         self.groups = Some(groups.into());
         self
     }
 
-    /// Configures one group of the `main` index.
     pub fn group(mut self, name: &str, config: impl Into<Value>) -> Self {
         let groups = self.groups.get_or_insert_with(|| Value::Object(Map::new()));
         if let Value::Object(m) = groups {
@@ -86,7 +76,6 @@ impl BuildOptions {
         self
     }
 
-    /// Adds an index with its rules and group configuration.
     pub fn index(mut self, name: &str, rules: impl Into<Value>, groups: Option<Value>) -> Self {
         let indexes = self.indexes.get_or_insert_with(|| Value::Object(Map::new()));
         if let Value::Object(m) = indexes {
@@ -121,7 +110,6 @@ impl BuildOptions {
     }
 }
 
-/// Merges a rule set (an object) or a list of rule sets into one ordered map.
 pub fn merge_rules(rules: &Value) -> Result<IndexMap<&str, &Map>> {
     let parts: Vec<&Value> = match rules {
         Value::Object(_) => vec![rules],
@@ -149,8 +137,6 @@ pub fn merge_rules(rules: &Value) -> Result<IndexMap<&str, &Map>> {
     Ok(merged)
 }
 
-/// Compiles one index into its sections: `index/<name>` and one `automaton/<name>/<group>` per
-/// non-exact group that has patterns.
 pub fn compile_index(name: &str, rules: &Value, groups: Option<&Value>) -> Result<Vec<(String, Vec<u8>)>> {
     let specs = resolve_groups(groups)?;
     let merged = merge_rules(rules)?;
@@ -271,10 +257,8 @@ pub fn compile_index(name: &str, rules: &Value, groups: Option<&Value>) -> Resul
     Ok(sections)
 }
 
-/// `YYYY-MM-DD` (UTC) of a Unix timestamp.
 fn utc_date(timestamp: i64) -> String {
     let days = timestamp.div_euclid(86_400);
-    // Howard Hinnant's civil_from_days.
     let z = days + 719_468;
     let era = z.div_euclid(146_097);
     let doe = z - era * 146_097;
@@ -305,7 +289,6 @@ fn make_header(metadata: Option<&Value>, timestamp: Option<i64>) -> Result<Map> 
     Ok(header)
 }
 
-/// Python truthiness of a JSON value.
 fn truthy(v: &Value) -> bool {
     match v {
         Value::Null => false,
@@ -374,12 +357,10 @@ fn build_internal(
     Ok((data, header, hashes))
 }
 
-/// Compiles rules into `.sigdb` bytes.
 pub fn build_bytes(rules: Option<&Value>, options: &BuildOptions) -> Result<Vec<u8>> {
     Ok(build_internal(rules, options)?.0)
 }
 
-/// Compiles rules into a `.sigdb` file, creating its directory.
 pub fn build(
     rules: Option<&Value>,
     output_path: impl AsRef<Path>,
@@ -422,8 +403,6 @@ fn list_json_files(root: &Path, rel: &str, out: &mut Vec<String>) -> Result<()> 
     Ok(())
 }
 
-/// Reads rules from a JSON file, or from every `*.json` under a directory (sorted by relative
-/// path, duplicate keys rejected). Keys keep the order of the files.
 pub fn read_rules(path: impl AsRef<Path>) -> Result<Map> {
     let p = path.as_ref();
     let to_map = |merged: IndexMap<&str, &Map>| -> Map {
@@ -458,7 +437,6 @@ pub fn read_rules(path: impl AsRef<Path>) -> Result<Map> {
     Ok(merged)
 }
 
-/// Compiles a rules JSON file.
 pub fn compile_json(
     json_path: impl AsRef<Path>,
     output_path: impl AsRef<Path>,
@@ -472,7 +450,6 @@ pub fn compile_json(
     build(Some(&rules), output_path, options)
 }
 
-/// Compiles every `*.json` under a directory.
 pub fn compile_dir(
     dir_path: impl AsRef<Path>,
     output_path: impl AsRef<Path>,

@@ -1,5 +1,3 @@
-//! Shared harness: runs golden vectors the way `tests/test_golden.py` of the Python package does.
-
 #![allow(dead_code)]
 
 use std::path::{Path, PathBuf};
@@ -15,7 +13,6 @@ pub fn read_json(path: &Path) -> Value {
     sigdb::json::parse_bytes(&bytes).unwrap_or_else(|e| panic!("{}: {e:?}", path.display()))
 }
 
-/// Case directories (with `rules.json` or `build.json`) of a golden directory.
 pub fn cases(dir: &str) -> Vec<PathBuf> {
     let root = tests_dir().join(dir);
     let mut out: Vec<PathBuf> = std::fs::read_dir(&root)
@@ -31,7 +28,6 @@ fn hex_bytes(s: &str) -> Vec<u8> {
     (0..s.len()).step_by(2).map(|i| u8::from_str_radix(&s[i..i + 2], 16).unwrap()).collect()
 }
 
-/// `(rules, options)` from a `build` object of the golden files.
 pub fn options_from(build: &Value) -> Result<(Option<Value>, BuildOptions), Error> {
     let obj = build.as_object().expect("build must be an object");
     let mut options = BuildOptions::new();
@@ -117,7 +113,6 @@ fn s<'a>(v: &'a Value, k: &str) -> &'a str {
     v.get(k).and_then(Value::as_str).unwrap_or_else(|| panic!("vector field {k}"))
 }
 
-/// One golden vector against a database: the `_run` of `test_golden.py`.
 pub fn run_vector(db: &Database, vector: &Value) -> Value {
     match run_inner(db, vector) {
         Ok(v) => v,
@@ -195,7 +190,6 @@ fn run_inner(db: &Database, vector: &Value) -> Result<Value, Error> {
     })
 }
 
-/// Python `==`: numbers compare by value (`1 == 1.0 == True`), dicts ignore key order.
 pub fn py_eq(a: &Value, b: &Value) -> bool {
     fn num(v: &Value) -> Option<f64> {
         match v {
@@ -229,7 +223,6 @@ pub fn digests_value(db: &Database) -> Value {
     Value::Object(db.section_digests().into_iter().map(|(k, v)| (k, Value::String(v))).collect())
 }
 
-/// Runs every vector of a case; returns mismatch descriptions.
 pub fn check_vectors(db: &Database, case: &Path, label: &str) -> Vec<String> {
     let mut failures = Vec::new();
     let vectors = read_json(&case.join("vectors.json"));

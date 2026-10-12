@@ -1,8 +1,3 @@
-"""Build tests/fixtures/py/<case>.sigdb with the Python package and check its golden digests.
-
-    python scripts/py_fixtures.py [--check]
-"""
-
 from __future__ import annotations
 
 import json
@@ -43,8 +38,6 @@ def main(argv: list[str]) -> None:
                 failures.append(f"{group}/{case.name}: python digests differ from sections.json")
             target = out_dir / f"{case.name}.sigdb"
             if check:
-                # Bytes depend on the libzstd bundled with python-zstandard; the section digests
-                # do not. tests/fixtures.rs compares the bytes against the Rust build.
                 if load_bytes(target.read_bytes()).section_digests() != digests:
                     failures.append(f"{target.name}: python build differs from the fixture")
             else:

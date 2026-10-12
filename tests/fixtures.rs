@@ -1,7 +1,3 @@
-//! Files built by the Python package (`fixtures/py`) and by sigdb-ts (`fixtures/ts`) load with
-//! the same section digests and answer every golden vector the same way. `html_heads.json` and
-//! `repr.json` hold reference output of Python's regular expressions and `repr()`.
-
 mod common;
 
 use common::*;

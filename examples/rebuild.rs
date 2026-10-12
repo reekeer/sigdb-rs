@@ -1,8 +1,3 @@
-//! Builds a file from a `build.json` (rules, groups, indexes, sections, metadata, timestamp — the
-//! keyword arguments of the Python `build`) and prints how long it took.
-//!
-//!     cargo run --release --example rebuild -- <build.json> <out.sigdb>
-
 #[path = "../tests/common/mod.rs"]
 mod common;
 

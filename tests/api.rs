@@ -1,5 +1,3 @@
-//! Public API, ported from `tests/test_api.py` and sigdb-ts `api.test.ts`.
-
 use std::path::{Path, PathBuf};
 
 use sigdb::compiler::compile_index;
